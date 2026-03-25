@@ -5,7 +5,7 @@ use rand::prelude::*;
 ///
 /// Example:
 /// ```
-/// let spec = DiceSpec{count: 1, sides: 20};
+/// let spec = DiceSpec{count: 1, sides: 20}; // 1d20
 /// ```
 #[derive(Clone, Copy)]
 pub struct DiceSpec {

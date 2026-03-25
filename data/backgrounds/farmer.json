@@ -1,0 +1,34 @@
+{
+    "id": "farmer",
+    "source": "srd",
+    "name": "Farmer",
+    "benefits": {
+        "ability_scores": {
+            "value": 1, "count": 3, "maxper": 2,
+            "stats": [ "STR", "CON", "WIS" ],
+        },
+        "feats": {
+            "fixed": ["tough"],
+            "choose": { "count": 0, "options": [] }
+        },
+        "tool_profs": {
+            "fixed": ["carpenters_tools"],
+            "choose": { "count": 0, "options": [] }
+        },
+        "skill_profs": {
+            "fixed": ["animal_handling", "nature"],
+            "choose": { "count": 0, "options": [] }
+        },
+    },
+    "equipment": {
+        "A": {
+            "items": ["travelers_clothes", "carpenters_tools", "healers_kit", "iron_pot", "shovel", "sickle"],
+            "currency": {"pp": 0, "gp": 30, "sp": 0, "cp": 0}
+        },
+        "B": {
+            "items": [],
+            "currency": {"pp": 0, "gp": 50, "sp": 0, "cp": 0}
+        }
+    },
+    "description": "You grew up close to the land. Years tending animals and cultivating the earth rewarded you with patience and good health. You have a keen appreciation for nature's bounty alongside a healthy respect for nature's wrath."
+}

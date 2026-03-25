@@ -1,0 +1,41 @@
+{
+    "id": "artisan",
+    "source": "srd",
+    "name": "Artisan",
+    "benefits": {
+        "ability_scores": {
+            "value": 1, "count": 3, "maxper": 2,
+            "stats": [ "STR", "CON", "WIS" ],
+        },
+        "feats": {
+            "fixed": ["crafter"],
+            "choose": { "count": 0, "options": [] }
+        },
+        "tool_profs": {
+            "fixed": [],
+            "choose": {
+                "count": 1,
+                "options": ["alchemists_supplies", "brewers_supplies", "calligraphers_supplies", "carpenters_tools", "cartographers_tools", "cobblers_tools", "cooks_utensils", "glassblowers_tools", "jewelers_tools", "leatherworkers_tools", "masons_tools", "painters_supplies", "potters_tools", "smiths_tools", "tinkers_tools", "weavers_tools", "woodcarvers_tools"]
+            }
+        },
+        "skill_profs": {
+            "fixed": ["investigation", "persuasion"],
+            "choose": { "count": 0, "options": [] }
+        },
+    },
+    "equipment": {
+        "A": {
+            "items": ["travelers_clothes", "pouch#2"],
+            "currency": {"pp": 0, "gp": 32, "sp": 0, "cp": 0},
+            "choose": {
+                "count": 1,
+                "options": ["alchemists_supplies", "brewers_supplies", "calligraphers_supplies", "carpenters_tools", "cartographers_tools", "cobblers_tools", "cooks_utensils", "glassblowers_tools", "jewelers_tools", "leatherworkers_tools", "masons_tools", "painters_supplies", "potters_tools", "smiths_tools", "tinkers_tools", "weavers_tools", "woodcarvers_tools"]
+            }
+        },
+        "B": {
+            "items": [],
+            "currency": {"pp": 0, "gp": 50, "sp": 0, "cp": 0},
+        }
+    },
+    "description": "You began mopping floors and scrubbing counters in an artisan's workshop for a few coppers per day as soon as you were strong enough to carry a bucket. When you were old enough to apprentice, you learned to create basic crafts of your own, as well as how to sweet-talk the occasional demanding customer. Your trade has also given you a keen eye for detail."
+}

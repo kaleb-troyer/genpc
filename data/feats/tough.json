@@ -1,0 +1,28 @@
+{
+    "id": "tough",
+    "source": "srd",
+    "name": "Tough",
+    "category": "Origin",
+    "prerequisites": {},
+    "benefits": {
+        "skill_profs": {
+            "fixed": [],
+            "choose": { "count": 0, "options": [] }
+        },
+        "tool_profs": {
+            "fixed": [],
+            "choose": { "count": 0, "options": [] }
+        },
+        "features": [],
+        "effects": [
+            {
+                "target": "hit_points",
+                "operation": "add",
+                "event": "level_up",
+                "value": 2
+            }
+        ]
+    },
+    "description": "Your Hit Point maximum increases by an amount equal to twice your character level when you gain this feat. Whenever you gain a character level thereafter, your Hit Point maximum increases by an additional 2 Hit Points.",
+    "repeatable": false
+}

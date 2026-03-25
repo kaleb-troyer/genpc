@@ -1,0 +1,52 @@
+{
+    "id": "human",
+    "source": "srd",
+    "name": "Human",
+    "type": "humanoid",
+    "size": {
+        "choose": {
+            "count": 1,
+            "options": ["Medium", "Small"]
+        }
+    },
+    "speed": 30,
+    "benefits": {
+        "feats": {
+            "fixed": [],
+            "choose": {
+                "count": 1,
+                "options": ["alert", "crafter", "healer", "lucky", "magic_initiate", "musician", "savage_attacker", "skilled", "tavern_brawler", "tough"]
+            }
+        },
+        "skill_profs": {
+            "fixed": [],
+            "choose": {
+                "count": 1,
+                "options": [ "acrobatics", "animal_handling", "arcana", "athletics", "deception", "history", "insight", "intimidation", "investigation", "nature", "medicine", "perception", "performance", "persuasion", "religion", "sleight_of_hand", "stealth", "survival"]
+            }
+        },
+        "features": [
+            {
+                "name": "Resourceful",
+                "description": "You gain Heroic Inspiration whenever you finish a Long Rest."
+            },
+            {
+                "name": "Skillful",
+                "description": "You gain proficiency in one skill of your choice."
+            },
+            {
+                "name": "Versatile",
+                "description": "You gain an Origin feat of your choice. Skilled is recommended."
+            }
+        ],
+        "effects": [
+            {
+                "target": "heroic_inspiration",
+                "operation": "add",
+                "event": "long_rest",
+                "value": 1
+            }
+        ]
+    },
+    "description": "Found throughout the multiverse, humans are as varied as they are numerous, and they endeavor to achieve as much as they can in the years they are given. Their ambition and resourcefulness are commended, respected, and feared on many worlds. Humans are as diverse in appearance as the people of Earth, and they have many gods. Scholars dispute the origin of humanity, but one of the earliest known human gatherings is said to have occurred in Sigil, the torus-shaped city at the center of the multiverse and the place where the Common language was born. From there, humans could have spread to every part of the multiverse, bringing the City of Doors' cosmopolitanism with them."
+}

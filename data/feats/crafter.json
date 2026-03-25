@@ -1,0 +1,37 @@
+{
+    "id": "crafter",
+    "source": "srd",
+    "name": "Crafter",
+    "category": "Origin",
+    "prerequisites": {},
+    "benefits": {
+        "skill_profs": {
+            "fixed": [],
+            "choose": { "count": 0, "options": [] }
+        },
+        "tool_profs": {
+            "fixed": [],
+            "choose": {
+                "count": 3,
+                "options": ["carpenters_tools", "leatherworkers_tools", "masons_tools", "potters_tools", "smiths_tools", "tinkers_tools", "weavers_tools", "woodcarvers_tools"]
+            }
+        },
+        "features": [
+            {
+                "name": "Tool Proficiency",
+                "description": "You gain proficiency with three different Artisan's Tools of your choice from the Fast Craftin table."
+            },
+            {
+                "name": "Discount",
+                "description": "Whenever you buy a nonmagical item, you receive a 20 percent discount on it."
+            },
+            {
+                "name": "Fast Crafting",
+                "description": "When you finish a Long Rest, you can craft one piece of gear from the Fast Crafting table, provided you have the Artisan's Tools associated with that item and have proficiency with those tools. The item lasts until you finish another Long Rest, at which point the item falls apart."
+            }
+        ],
+        "effects": []
+    },
+    "description": "You gain the following benefits: Tool Proficiency, Discount, Fast Crafting.",
+    "repeatable": false
+}

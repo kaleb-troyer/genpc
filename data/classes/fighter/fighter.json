@@ -1,0 +1,55 @@
+{
+    "id": "fighter",
+    "source": "srd",
+    "name": "Fighter",
+    "prerequisites": {},
+    "hit_die": 10,
+    "saving_throws": [ "STR", "CON" ],
+    "benefits": {
+        "skill_profs": {
+            "fixed": [],
+            "choose": { "count": 0, "options": [] }
+        },
+        "tool_profs": {
+            "fixed": [],
+            "choose": { "count": 0, "options": [] }
+        },
+        "armor_profs": {
+            "fixed": [],
+            "choose": { "count": 0, "options": [] }
+        },
+        "weapon_profs": {
+            "fixed": [],
+            "choose": { "count": 0, "options": [] }
+        },
+        "features": {
+            "1": [{
+                    "name": "",
+                    "description": ""
+                },
+                {
+                    "name": "",
+                    "description": ""
+                }],
+            "2": [{
+                    "name": "",
+                    "description": ""
+                },
+                {
+                    "name": "",
+                    "description": ""
+                }],
+            "3": [{
+                    "name": "",
+                    "description": ""
+                },
+                {
+                    "name": "",
+                    "description": ""
+                }]
+        },
+        "effects": []
+    },
+    "description": "You gain the following benefits: Initiative Proficiency, Initiative Swap.",
+    "repeatable": false
+}
