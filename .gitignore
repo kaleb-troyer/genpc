@@ -1,1 +1,39 @@
 /target
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+develop-eggs/
+wheels/
+share/python-wheels/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Environments
+.env
+.venv/*
+.vscode/*
+.archive/*
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+

@@ -124,11 +124,11 @@ pub enum Coin { CP, SP, GP, PP }
 pub struct InsufficientFunds;
 
 /// Conversion rate to the next denomination down
-const CHAIN: [(Coin, u32); 4] = [
-    (Coin::PP, 10),
-    (Coin::GP, 10),
-    (Coin::SP, 10),
-    (Coin::CP,  1)
+const CHAIN: [(Coin, u32, u32); 4] = [
+    (Coin::PP, 10, 1000),
+    (Coin::GP, 10, 100),
+    (Coin::SP, 10, 10),
+    (Coin::CP,  1, 1)
 ];
 
 /// Container for d&d currency valuations
@@ -145,7 +145,7 @@ impl Currency {
     /// Calculates the total value of the purse
     pub fn total(&self) -> u32 {
         let mut result = self[Coin::PP];
-        for (coin, rate) in CHAIN.iter().skip(1) {
+        for (coin, rate, _) in CHAIN.iter().skip(1) {
             result = result * rate + self[*coin];
         }
         return result;
@@ -154,24 +154,34 @@ impl Currency {
     /// Sets the total value of the purse to zero
     pub fn empty(&mut self) {
         for i in 0..CHAIN.len() {
-            let (coin, _) = CHAIN[i];
+            let (coin, _, _) = CHAIN[i];
             self[coin] = 0;
         }
     }
 
     /// Try to substract a cost from a purse, returning an error if the total
     /// value of the purse isn't great enough
-    /// NOTE: This doesn't work! What if rhs has no pp, but the player cannot
-    /// pay the price without their pp; platinums are erroneously skipped!
-    pub fn try_sub(&mut self, mut rhs: Currency) -> Result<(), InsufficientFunds> {
+    pub fn try_sub(&mut self, rhs: Currency) -> Result<(), InsufficientFunds> {
 
+        // copies and shadows rhs so caller value remains untouched
+        let mut rhs = rhs;
         if self.total() < rhs.total() {
             return Err(InsufficientFunds);
         }
 
+        // must rebase rhs so that the next for-loop functions as intended
+        let mut cost: u32 = rhs.total();
+        for i in 0..CHAIN.len() {
+            let (coin, _, base) = CHAIN[i];
+
+            rhs[coin] = cost // base
+            cost = cost % base
+        }
+
+        // looping for most to least valuable coin to perform the subtraction
         for i in 0..CHAIN.len() - 1 {
-            let (coin, rate) = CHAIN[i];
-            let (next, _) = CHAIN[i+1];
+            let (coin, rate, base) = CHAIN[i];
+            let (next, _, _) = CHAIN[i+1];
 
             if self[coin] >= rhs[coin] {
                 self[coin] -= rhs[coin];
