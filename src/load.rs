@@ -43,10 +43,10 @@ pub struct ASmod {
 // ========================================
 // Source Features and Effects
 // ========================================
-// Features include everying that is brought in from a race, class,
-// background, or feat. Features are implemented mechanically through
-// choose blocks and effects. Effects are specially defined as a feature
-// that modifies a class resource on an event, such as a long rest.
+// Features include everying that is brought in from a race, class, background,
+// or feat. Features are implemented mechanically through choose blocks and
+// effects. Effects are specially defined as a feature that modifies a class
+// resource on an event, such as a long rest.
 
 /// Simply contains name and description for a feature
 #[derive(Debug, Deserialize, Serialize)]

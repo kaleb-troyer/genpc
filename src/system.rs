@@ -103,6 +103,107 @@ impl Add for AbilityScores {
 }
 
 // ========================================
+// D&D 5.5e Currency
+// ========================================
+
+pub enum Coin { CP, SP, GP, PP }
+pub struct InsufficientFunds;
+
+const CHAIN: [(Coin, u32); 4] = [
+    (Coin::PP, 10),
+    (Coin::GP, 10),
+    (Coin::SP, 10),
+    (Coin::CP,  1)
+];
+
+#[derive(Debug, Copy, Clone)]
+pub struct Currency {
+    pp: u32,
+    gp: u32,
+    sp: u32,
+    cp: u32
+}
+
+impl Currency {
+    pub const ALL: [Coin; 4] = [Coin::PP, Coin::GP, Coin::SP, Coin::CP];
+
+    fn total(&self) -> u32 {
+        let mut result: u32 = 0;
+        result += self.cp;
+        result += self.sp * 10;
+        result += self.gp * 100;
+        result += self.pp * 1000;
+        result
+    }
+
+    fn try_sub(&mut self, mut rhs: Currency) -> Result<(), InsufficientFunds> {
+
+        if self.total() < rhs.total() {
+            return Err(InsufficientFunds);
+        }
+
+        for i in 0..CHAIN.len() - 1 {
+            let (coin, rate) = CHAIN[i];
+            let (next, _) = CHAIN[i+1];
+
+            if self[coin] >= rhs[coin] {
+                self[coin] -= rhs[coin];
+            } else {
+                let deficit = rhs[coin] - self[coin];
+                rhs[next] += deficit * rate;
+                self[coin] = 0;
+                rhs[coin] = 0;
+            }
+        }
+
+        self.cp -= rhs.cp;
+        return Ok(());
+    }
+}
+
+impl Index<Coin> for Currency {
+    type Output = u32;
+    fn index(&self, coin: Coin) -> &u32 {
+        match coin {
+            Coin::PP => &self.pp,
+            Coin::GP => &self.gp,
+            Coin::SP => &self.sp,
+            Coin::CP => &self.cp,
+        }
+    }
+}
+
+impl IndexMut<Coin> for Currency {
+    fn index_mut(&mut self, coin: Coin) -> &mut u32 {
+        match coin {
+            Coin::PP => &mut self.pp,
+            Coin::GP => &mut self.gp,
+            Coin::SP => &mut self.sp,
+            Coin::CP => &mut self.cp,
+        }
+    }
+}
+
+impl AddAssign for Currency {
+    fn add_assign(&mut self, rhs: Currency) {
+        self.pp += rhs.pp;
+        self.gp += rhs.gp;
+        self.sp += rhs.sp;
+        self.cp += rhs.cp;
+    }
+}
+
+impl Add for Currency {
+    type Output = Currency;
+
+    fn add(self, rhs: Currency) -> Currency {
+        let mut result = self;
+        result += rhs;
+        result
+    }
+}
+
+// ========================================
 // D&D 5.5e Rules and Truisms
 // ========================================
 
