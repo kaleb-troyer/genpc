@@ -105,10 +105,25 @@ impl Add for AbilityScores {
 // ========================================
 // D&D 5.5e Currency
 // ========================================
+// This section reveals the Coin enum, CHAIN vector, and Currency struct. The
+// Coin enum holds the denominations of coin, while the CHAIN vector tracks the
+// conversion rate of each coin to the next lowest denomination. The Currency
+// struct serves as a container for anything that has a monetary value, such as
+// a purse, loot, or an item for sale, and comes with implementations for
+// calculating the total value, attempting a purchase, indexing by Coin, or
+// adding two containers together.
+// ```
+// let mut purse = Currency { pp: 0, gp: 0, sp: 20, cp: 12 };
+// purse[Coin::GP] += 3;
+//
+// let rope = Currency { pp: 0, gp: 0, sp: 3, cp: 0 };
+// purse.try_sub(rope);
+// ```
 
 pub enum Coin { CP, SP, GP, PP }
 pub struct InsufficientFunds;
 
+/// Conversion rate to the next denomination down
 const CHAIN: [(Coin, u32); 4] = [
     (Coin::PP, 10),
     (Coin::GP, 10),
@@ -116,27 +131,39 @@ const CHAIN: [(Coin, u32); 4] = [
     (Coin::CP,  1)
 ];
 
-#[derive(Debug, Copy, Clone)]
+/// Container for d&d currency valuations
+#[derive(Debug, Clone, Copy)]
 pub struct Currency {
-    pp: u32,
-    gp: u32,
-    sp: u32,
-    cp: u32
+    pub pp: u32,
+    pub gp: u32,
+    pub sp: u32,
+    pub cp: u32
 }
 
 impl Currency {
-    pub const ALL: [Coin; 4] = [Coin::PP, Coin::GP, Coin::SP, Coin::CP];
 
-    fn total(&self) -> u32 {
-        let mut result: u32 = 0;
-        result += self.cp;
-        result += self.sp * 10;
-        result += self.gp * 100;
-        result += self.pp * 1000;
-        result
+    /// Calculates the total value of the purse
+    pub fn total(&self) -> u32 {
+        let mut result = self[Coin::PP];
+        for (coin, rate) in CHAIN.iter().skip(1) {
+            result = result * rate + self[*coin];
+        }
+        return result;
     }
 
-    fn try_sub(&mut self, mut rhs: Currency) -> Result<(), InsufficientFunds> {
+    /// Sets the total value of the purse to zero
+    pub fn empty(&mut self) {
+        for i in 0..CHAIN.len() {
+            let (coin, _) = CHAIN[i];
+            self[coin] = 0;
+        }
+    }
+
+    /// Try to substract a cost from a purse, returning an error if the total
+    /// value of the purse isn't great enough
+    /// NOTE: This doesn't work! What if rhs has no pp, but the player cannot
+    /// pay the price without their pp; platinums are erroneously skipped!
+    pub fn try_sub(&mut self, mut rhs: Currency) -> Result<(), InsufficientFunds> {
 
         if self.total() < rhs.total() {
             return Err(InsufficientFunds);
