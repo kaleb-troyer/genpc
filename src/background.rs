@@ -1,7 +1,6 @@
 
-use crate::system::{Stat::*, AbilityScores};
+use crate::system::{Stat::*, AbilityScores, Coin::*, Currency};
 use crate::load::*;
-use std::sync::LazyLock;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -13,6 +12,7 @@ struct Background {
     equipment: Equipment,
     description: String,
 }
+
 
 
 

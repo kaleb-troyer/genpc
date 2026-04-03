@@ -8,7 +8,7 @@ mod dice;
 mod load;
 
 use system::{Stat::*, AbilityScores};
-use class::{Class, CLASSES};
+use class::{Class};
 use race::{Race, RACES};
 use char::{Character};
 use dice::{Roll, DiceSpec};
@@ -16,13 +16,13 @@ use std::collections::HashMap;
 
 fn main() {
 
-    let classes: HashMap<&str, &Class> = CLASSES.iter().map(
-        |c| (c.name, c)
-    ).collect();
+    // let classes: HashMap<&str, &Class> = CLASSES.iter().map(
+    //     |c| (c.name, c)
+    // ).collect();
 
-    let races: HashMap<&str, &Race> = RACES.iter().map(
-        |r| (r.name, r)
-    ).collect();
+    // let races: HashMap<&str, &Race> = RACES.iter().map(
+    //     |r| (r.name, r)
+    // ).collect();
 
     // this is a stat roller per 4d6 & drop the lowest rules
     let statspec = DiceSpec { count: 4, sides: 6 };
@@ -43,17 +43,17 @@ fn main() {
     let statrolls = AbilityScores::from_array(rolls);
     println!("{:?}", statrolls);
 
-    let mut char1 = Character::new(
-        "Perry Paladin",
-        races.get("Halfling").expect("Race not found."),
-        classes.get("Paladin").expect("Class not found."),
-        statrolls,
-    );
+    // let mut char1 = Character::new(
+    //     "Perry Paladin",
+    //     races.get("Halfling").expect("Race not found."),
+    //     classes.get("Paladin").expect("Class not found."),
+    //     statrolls,
+    // );
 
-    char1.add_lvl();
+    // char1.add_lvl();
 
-    println!("{:#?}", char1);
-    println!("DEX mod = {}", char1.ability_scores.modifier(DEX));
+    // println!("{:#?}", char1);
+    // println!("DEX mod = {}", char1.ability_scores.modifier(DEX));
 
 }
 

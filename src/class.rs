@@ -1,20 +1,22 @@
 
-// Class Structure and Collection
-#[derive(Debug)]
+use crate::load::*;
+use serde::{Deserialize, Serialize};
+
+/// Class structure and collection
+#[derive(Debug, Deserialize, Serialize, Default)]
 pub struct Class {
-    pub name: &'static str,
-    pub hit_die: u8,
+    id: String,
+    name: String,
+    source: String,
+    prerequisites: Prerequisites,
+    hit_die: u8,
+    saving_throws: Vec<String>,
+    benefits: Benefits,
+    description: String,
 }
 
-pub static CLASSES: &[Class] = &[
-    Class {
-        name: "Fighter",
-        hit_die: 10,
-    },
-    Class {
-        name: "Paladin",
-        hit_die: 10,
-    }
-];
+
+
+
 
 // EOF

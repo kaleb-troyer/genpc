@@ -1,5 +1,6 @@
 
 use std::ops::{Add, AddAssign, Index, IndexMut};
+use serde::{Deserialize, Serialize};
 
 // ========================================
 // Stat Data, Members, and Methods
@@ -29,7 +30,8 @@ impl Stat {
         Stat::CHA,
     ];
 
-    pub fn index(self) -> usize {
+    /// Returns the enumerated value of the stat, e.g. Stat::WIS.val() = 4
+    pub fn val(self) -> usize {
         self as usize
     }
 }
@@ -120,10 +122,16 @@ impl Add for AbilityScores {
 // purse.try_sub(rope);
 // ```
 
+#[derive(Debug, Clone, Copy)]
 pub enum Coin { CP, SP, GP, PP }
-pub struct InsufficientFunds;
 
-/// Conversion rate to the next denomination down
+/// Possible errors incurred during currency operations
+#[derive(Debug)]
+pub enum CurrencyError {
+    InsufficientFunds,
+}
+
+/// Conversion rates to the next denomination down
 const CHAIN: [(Coin, u32, u32); 4] = [
     (Coin::PP, 10, 1000),
     (Coin::GP, 10, 100),
@@ -132,7 +140,7 @@ const CHAIN: [(Coin, u32, u32); 4] = [
 ];
 
 /// Container for d&d currency valuations
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub struct Currency {
     pub pp: u32,
     pub gp: u32,
@@ -141,7 +149,6 @@ pub struct Currency {
 }
 
 impl Currency {
-
     /// Calculates the total value of the purse
     pub fn total(&self) -> u32 {
         let mut result = self[Coin::PP];
@@ -161,12 +168,12 @@ impl Currency {
 
     /// Try to substract a cost from a purse, returning an error if the total
     /// value of the purse isn't great enough
-    pub fn try_sub(&mut self, rhs: Currency) -> Result<(), InsufficientFunds> {
+    pub fn try_sub(&mut self, rhs: Currency) -> Result<(), CurrencyError> {
 
         // copies and shadows rhs so caller value remains untouched
         let mut rhs = rhs;
         if self.total() < rhs.total() {
-            return Err(InsufficientFunds);
+            return Err(CurrencyError::InsufficientFunds);
         }
 
         // must rebase rhs so that the next for-loop functions as intended
@@ -174,8 +181,8 @@ impl Currency {
         for i in 0..CHAIN.len() {
             let (coin, _, base) = CHAIN[i];
 
-            rhs[coin] = cost // base
-            cost = cost % base
+            rhs[coin] = cost / base;
+            cost = cost % base;
         }
 
         // looping for most to least valuable coin to perform the subtraction

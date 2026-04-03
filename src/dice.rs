@@ -17,9 +17,13 @@ pub struct DiceSpec {
 ///
 /// Example:
 /// ```
-/// let roll = Roll::new(
-///     DiceSpec{count: 4, sides: 6}
-/// );
+/// let mut roll = Roll::new(
+///     DiceSpec{ count: 4, sides: 6 }
+/// ).adv();
+/// roll.reroll(1)
+/// let min = roll.min();
+/// let max = roll.max();
+/// let tot = roll.total();
 /// ```
 pub struct Roll {
     spec: DiceSpec,
@@ -57,7 +61,7 @@ impl Roll {
         self.results.iter().map(|&r| r as u32).sum()
     }
 
-    /// Reroll a die that rolled the specified value
+    /// Reroll one die that rolled the specified value
     pub fn reroll(&mut self, side: u8) {
         for val in &mut self.results {
             if *val == side {

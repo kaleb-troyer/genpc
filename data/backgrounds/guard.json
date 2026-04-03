@@ -2,7 +2,7 @@
     "id": "guard",
     "source": "srd",
     "name": "Guard",
-    "benefits": {
+    "benefits": { "0": {
         "ability_scores": {
             "value": 1, "count": 3, "maxper": 2,
             "stats": [ "STR", "CON", "WIS" ],
@@ -22,7 +22,7 @@
             "fixed": ["athletics", "perception"],
             "choose": { "count": 0, "options": [] }
         }
-    },
+    }},
     "equipment": {
         "A": {
             "items": ["travelers_clothes", "spear", "light_crossbow", "bolts#20", "hooded_lantern", "manacles", "quiver"],

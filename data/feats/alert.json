@@ -4,7 +4,7 @@
     "name": "Alert",
     "category": "Origin",
     "prerequisites": {},
-    "benefits": {
+    "benefits": { "0": {
         "skill_profs": {
             "fixed": ["initiative"],
             "choose": { "count": 0, "options": [] }
@@ -24,7 +24,7 @@
             }
         ],
         "effects": []
-    },
+    }},
     "description": "You gain the following benefits: Initiative Proficiency, Initiative Swap.",
     "repeatable": false
 }
