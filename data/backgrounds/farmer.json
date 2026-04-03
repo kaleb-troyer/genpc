@@ -1,4 +1,6 @@
 {
+    "category": "background",
+    "type": null,
     "id": "farmer",
     "source": "srd",
     "name": "Farmer",

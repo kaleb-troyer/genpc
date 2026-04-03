@@ -6,13 +6,13 @@ use serde::{Deserialize, Serialize};
 
 /// Species structure and collection
 #[derive(Debug, Deserialize, Serialize, Default)]
-pub struct Race {
+pub struct Feat {
+    category: String,
+    type: String,
+    source: String,
     id: String,
     name: String,
-    source: String,
-    type: String,
-    size: Choice,
-    speed: u8,
+    prerequisites: Prerequisites,
     benefits: HashMap<u8, Benefits>,
     description: String,
 }

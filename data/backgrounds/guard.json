@@ -1,4 +1,6 @@
 {
+    "category": "background",
+    "type": null,
     "id": "guard",
     "source": "srd",
     "name": "Guard",

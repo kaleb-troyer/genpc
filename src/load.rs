@@ -17,8 +17,9 @@ pub struct Benefits {
     feats: Option<SelectionPool>,       // feats selection, see below
     skill_profs: Option<SelectionPool>, // skill proficiency selection
     tool_profs: Option<SelectionPool>,  // tool proficiency selection
-    sublcass: Option<SelectionPool>,    // subclass selection
+    sublcass: Option<Choice>,           // subclass selection
     features: Option<Vec<Feature>>,     // list of primary source features, see below
+    resources: Option<Vec<Resource>>,   // list of character resources, see below
     effects: Option<Vec<Effect>>,       // list of primary source effects, see below
 }
 
@@ -43,6 +44,7 @@ pub struct EquipmentOps {
 // Describes the object and set of parameters that determine how ability score
 // modifiers are selected during character creation, level-up, or multiclassing.
 
+/// Ability score increase from character creation or level-up
 #[derive(Debug, Deserialize, Serialize)]
 pub struct ASI {
     value: u8,      // point value applied to ability score, not a modifier (usuall 1)
@@ -51,7 +53,7 @@ pub struct ASI {
     stats: Vec<String>, // ability scores to which points may be allocated
 }
 
-/// Prerequisites for multiclassing
+/// Ability score prerequisites for feature selection
 #[derive(Debug, Deserialize, Serialize, Default)]
 pub struct Prerequisites {
     STR: Option<u8>,
@@ -78,18 +80,27 @@ impl Index<Stat> for Prerequisites {
 }
 
 // ========================================
-// Source Features and Effects
+// Source Features, Resources, and Effects
 // ========================================
 // Features include everying that is brought in from a race, class, background,
 // or feat. Features are implemented mechanically through choose blocks and
 // effects. Effects are specially defined as a feature that modifies a class
-// resource on an event, such as a long rest.
+// resource on an event, such as a long rest. Resources are just class resources
+// like superiority dice, maneuvers, etc.
 
 /// Contains the name and description for a feature; no other functionality
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Feature {
     name: String,
     description: String,
+}
+
+/// Contains the resource name, associated die, resource count, etc.
+pub struct Resource {
+    id: String,
+    name: String,
+    die: Option<u8>,
+    count: Option<u8>,
 }
 
 /// Effect object, which modifies character resources on an event

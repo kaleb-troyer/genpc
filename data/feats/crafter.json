@@ -1,8 +1,9 @@
 {
-    "id": "crafter",
+    "category": "feat",
+    "type": "origin",
     "source": "srd",
+    "id": "crafter",
     "name": "Crafter",
-    "category": "Origin",
     "prerequisites": {},
     "benefits": { "0": {
         "skill_profs": {

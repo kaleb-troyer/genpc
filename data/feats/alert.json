@@ -1,8 +1,9 @@
 {
-    "id": "alert",
+    "category": "feat",
+    "type": "origin",
     "source": "srd",
+    "id": "alert",
     "name": "Alert",
-    "category": "Origin",
     "prerequisites": {},
     "benefits": { "0": {
         "skill_profs": {

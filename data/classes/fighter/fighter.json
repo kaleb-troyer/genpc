@@ -1,9 +1,11 @@
 {
-    "id": "fighter",
+    "category": "class",
+    "type": "primary",
     "source": "srd",
+    "id": "fighter",
     "name": "Fighter",
-    "prerequisites": { "STR": 13 },
     "hit_die": 10,
+    "primary_ability": [ "STR", "DEX" ],
     "saving_throws": [ "STR", "CON" ],
     "benefits": {
         "0": {
@@ -63,8 +65,10 @@
         }, 
         "3": {
             "subclass": {
-                "fixed": [],
-                "choose": { "count": 1, "options": [] }
+                "choose": {
+                    "count": 1,
+                    "options": []
+                }
             },
             "features": [
                 {
@@ -77,8 +81,7 @@
                 }
             ],
             "effects": []
-        }, 
+        },
     },
     "description": "You gain the following benefits: Initiative Proficiency, Initiative Swap.",
-    "repeatable": false
 }

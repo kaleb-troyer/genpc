@@ -1,8 +1,9 @@
 {
-    "id": "tough",
+    "category": "feat",
+    "type": "origin",
     "source": "srd",
+    "id": "tough",
     "name": "Tough",
-    "category": "Origin",
     "prerequisites": {},
     "benefits": { "0": {
         "skill_profs": {

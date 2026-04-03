@@ -1,6 +1,8 @@
 {
-    "id": "artisan",
+    "category": "background",
+    "type": null,
     "source": "srd",
+    "id": "artisan",
     "name": "Artisan",
     "benefits": { "0": {
         "ability_scores": {

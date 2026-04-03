@@ -1,8 +1,9 @@
 {
-    "id": "human",
-    "source": "srd",
-    "name": "Human",
+    "category": "race",
     "type": "humanoid",
+    "source": "srd",
+    "id": "human",
+    "name": "Human",
     "size": {
         "choose": {
             "count": 1,

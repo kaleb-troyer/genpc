@@ -34,6 +34,19 @@ impl Stat {
     pub fn val(self) -> usize {
         self as usize
     }
+
+    /// Returns a stat, given it's corresponding string
+    pub fn from_str(stat: &str) -> Option<Stat> {
+        match stat {
+            "STR" => Some(Stat::STR),
+            "DEX" => Some(Stat::DEX),
+            "CON" => Some(Stat::CON),
+            "INT" => Some(Stat::INT),
+            "WIS" => Some(Stat::WIS),
+            "CHA" => Some(Stat::CHA),
+            _ => None,
+        }
+    }
 }
 
 // ========================================

@@ -8,7 +8,7 @@ struct Background {
     id: String,
     name: String,
     source: String,
-    benefits: Benefits,
+    benefits: HashMap<u8, Benefits>,
     equipment: Equipment,
     description: String,
 }
