@@ -95,12 +95,14 @@ pub struct Feature {
     description: String,
 }
 
-/// Contains the resource name, associated die, resource count, etc.
+/// Contains the resource name, associated die, resource usage, etc.
+#[derive(Debug, Deserialize, Serialize, Default)]
 pub struct Resource {
     id: String,
     name: String,
     die: Option<u8>,
-    count: Option<u8>,
+    uses: Option<u8>,
+    items: Option<SelectionPool>,
 }
 
 /// Effect object, which modifies character resources on an event
@@ -139,7 +141,14 @@ pub struct SelectionPool {
 #[derive(Debug, Deserialize, Serialize, Default, Clone)]
 pub struct Choice {
     count: u8,
-    options: Vec<String>,
+    options: ChoiceTypes,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(untagged)]
+pub enum ChoiceTypes {
+    Single(String),
+    Multiple(Vec<String>)
 }
 
 impl Choice {

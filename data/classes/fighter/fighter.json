@@ -7,6 +7,7 @@
     "hit_die": 10,
     "primary_ability": [ "STR", "DEX" ],
     "saving_throws": [ "STR", "CON" ],
+    "caster_type": null,
     "benefits": {
         "0": {
             "skill_profs": {
@@ -82,6 +83,24 @@
             ],
             "effects": []
         },
+    },
+    "equipment": {
+        "A": {
+            "items": [],
+            "currency": {"pp": 0, "gp": 0, "sp": 0, "cp": 0},
+            "choose": {
+                "count": 0,
+                "options": []
+            }
+        },
+        "B": {
+            "items": [],
+            "currency": {"pp": 0, "gp": 50, "sp": 0, "cp": 0},
+        },
+        "C": {
+            "items": [],
+            "currency": {"pp": 0, "gp": 155, "sp": 0, "cp": 0},
+        }
     },
     "description": "You gain the following benefits: Initiative Proficiency, Initiative Swap.",
 }

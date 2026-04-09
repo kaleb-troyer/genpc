@@ -1,7 +1,7 @@
 
 use crate::system::{Stat::*, AbilityScores};
 use crate::load::*;
-use std::sync::LazyLock;
+use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
 /// Species structure and collection
@@ -10,7 +10,8 @@ pub struct Race {
     id: String,
     name: String,
     source: String,
-    type: String,
+    #[serde(rename = "type")]
+    kind: String,
     size: Choice,
     speed: u8,
     benefits: HashMap<u8, Benefits>,

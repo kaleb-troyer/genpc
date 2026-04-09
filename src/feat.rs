@@ -4,11 +4,11 @@ use crate::load::*;
 use std::sync::LazyLock;
 use serde::{Deserialize, Serialize};
 
-/// Species structure and collection
+/// Feat structure and collection
 #[derive(Debug, Deserialize, Serialize, Default)]
 pub struct Feat {
-    category: String,
-    type: String,
+    #[serde(rename = "type")]
+    kind: String, // keyword 'type' is reserved; using kind
     source: String,
     id: String,
     name: String,

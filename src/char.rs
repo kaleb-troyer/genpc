@@ -18,28 +18,28 @@ pub struct Character {
 // Character Constructor
 impl Character {
 
-    pub fn new(
-        name: impl Into<String>,
-        race: &'static Race,
-        class: &'static Class,
-        ability_scores: AbilityScores,
-    ) -> Self {
-        let ascores = ability_scores + race.asi;
-
-        let level = 1;
-        let experience = 0;
-        let prof_bonus = 2;
-
-        Self {
-            name: name.into(),
-            ability_scores: ascores,
-            race,
-            class,
-            level,
-            experience,
-            prof_bonus,
-        }
-    }
+    // pub fn new(
+    //     name: impl Into<String>,
+    //     race: &'static Race,
+    //     class: &'static Class,
+    //     ability_scores: AbilityScores,
+    // ) -> Self {
+    //     let ascores = ability_scores + race.asi;
+    //
+    //     let level = 1;
+    //     let experience = 0;
+    //     let prof_bonus = 2;
+    //
+    //     Self {
+    //         name: name.into(),
+    //         ability_scores: ascores,
+    //         race,
+    //         class,
+    //         level,
+    //         experience,
+    //         prof_bonus,
+    //     }
+    // }
 }
 
 // Character Reading and Advancement

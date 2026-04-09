@@ -9,7 +9,7 @@ mod load;
 
 use system::{Stat::*, AbilityScores};
 use class::{Class};
-use race::{Race, RACES};
+use race::{Race};
 use char::{Character};
 use dice::{Roll, DiceSpec};
 use std::collections::HashMap;

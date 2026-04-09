@@ -1,6 +1,7 @@
 
 use crate::load::*;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 /// Class structure and collection
 #[derive(Debug, Deserialize, Serialize, Default)]
@@ -11,6 +12,7 @@ pub struct Class {
     hit_die: u8,
     primary_ability: Vec<String>,
     saving_throws: Vec<String>,
+    caster_type: String,
     benefits: HashMap<u8, Benefits>,
     description: String,
 }
@@ -22,6 +24,7 @@ pub struct Subclass {
     name: String,
     source: String,
     saving_throws: Option<Vec<String>>,
+    caster_type: String,
     benefits: HashMap<u8, Benefits>,
     description: String,
 }

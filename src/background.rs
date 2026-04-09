@@ -2,6 +2,7 @@
 use crate::system::{Stat::*, AbilityScores, Coin::*, Currency};
 use crate::load::*;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Deserialize, Serialize)]
 struct Background {
