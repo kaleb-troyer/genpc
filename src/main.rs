@@ -1,4 +1,5 @@
 
+// internal modules
 mod background;
 mod system;
 mod class;
@@ -7,22 +8,18 @@ mod char;
 mod dice;
 mod load;
 
-use system::{Stat::*, AbilityScores};
+// internal crates
+use system::{Stat, Stat::*, AbilityScores};
 use class::{Class};
 use race::{Race};
 use char::{Character};
 use dice::{Roll, DiceSpec};
+
+// external crates
 use std::collections::HashMap;
+use dialoguer::Select;
 
 fn main() {
-
-    // let classes: HashMap<&str, &Class> = CLASSES.iter().map(
-    //     |c| (c.name, c)
-    // ).collect();
-
-    // let races: HashMap<&str, &Race> = RACES.iter().map(
-    //     |r| (r.name, r)
-    // ).collect();
 
     // this is a stat roller per 4d6 & drop the lowest rules
     let statspec = DiceSpec { count: 4, sides: 6 };
@@ -41,20 +38,58 @@ fn main() {
     };
 
     let statrolls = AbilityScores::from_array(rolls);
-    println!("{:?}", statrolls);
+    println!("\n{:?}\n", rolls);
 
-    // let mut char1 = Character::new(
-    //     "Perry Paladin",
-    //     races.get("Halfling").expect("Race not found."),
-    //     classes.get("Paladin").expect("Class not found."),
-    //     statrolls,
-    // );
+    let mut u_menu;
+    let mut s_menu;
+    let mut u_stat;
+    let mut s_stat;
+    let v_menu = vec!["New", "Load", "Exit"];
+    loop {
 
-    // char1.add_lvl();
+        u_menu = Select::new()
+            .with_prompt("Welcome to genpc!\n")
+            .items(&v_menu)
+            .default(0)
+            .interact()
+            .unwrap();
+        s_menu = v_menu[u_menu];
 
-    // println!("{:#?}", char1);
-    // println!("DEX mod = {}", char1.ability_scores.modifier(DEX));
+        if s_menu == "New" {
 
+            for stat in Stat::ALL {
+
+                u_stat = Select::new()
+                    .with_prompt(format!("Choose your {} stat:", stat))
+                    .items(&rolls)
+                    .default(0)
+                    .interact()
+                    .unwrap();
+                s_stat = rolls[u_stat];
+
+                println!("You chose: {}", s_stat);
+
+            }
+        }
+
+        if (s_menu == "Exit") {
+            break;
+        }
+    }
 }
+
+
+// use dialoguer::Select;
+//
+// let options = vec!["Fighter", "Wizard", "Rogue"];
+//
+// let selection = Select::new()
+//     .with_prompt("Choose a class")
+//     .items(&options)
+//     .interact()
+//     .unwrap();
+//
+// println!("You chose: {}", options[selection]);
+
 
 // EOF
