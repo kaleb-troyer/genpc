@@ -49,20 +49,23 @@
 
 ### on deck
 ---
-- [ ] build json data containers for...
-    - [ ] class
-    - [ ] background
-    - [ ] race
 
 ### in progress
 ---
+- [ ] json data containers
+    - [ ] add "parent" field handling for subclasses
 - [ ] build tui minimum viable product
-    - [ ] stat selector
+    - [x] stat selector
         - [x] roller
         - [x] select one stat (in main())
-        - [ ] iterate over stats to select
-        - [ ] pretty format
+        - [x] iterate over stats to select
+        - [x] pretty format
+    - [ ] background selector
 - [ ] rust json importer
+    - [ ] load background as object successfully
+    - [ ] loader graceful error handling
+    - [ ] test load each type of object
+    - [ ] full importer, saved to Vec of all data
 
 ### complete
 ---

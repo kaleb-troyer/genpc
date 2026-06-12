@@ -5,13 +5,13 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 #[derive(Debug, Deserialize, Serialize)]
-struct Background {
-    id: String,
-    name: String,
-    source: String,
-    benefits: HashMap<u8, Benefits>,
-    equipment: Equipment,
-    description: String,
+pub struct Background {
+    pub id: String,
+    pub name: String,
+    pub source: String,
+    pub benefits: HashMap<u8, Benefits>,
+    pub equipment: Equipment,
+    pub description: String,
 }
 
 

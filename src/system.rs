@@ -51,7 +51,7 @@ impl Stat {
 }
 
 impl fmt::Display for Stat {
-    
+
     /// Returns the string value of the Stat object
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match self {

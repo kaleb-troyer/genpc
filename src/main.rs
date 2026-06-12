@@ -17,7 +17,20 @@ use dice::{Roll, DiceSpec};
 
 // external crates
 use std::collections::HashMap;
-use dialoguer::Select;
+use dialoguer::{Select, console::Term};
+
+
+
+use std::fs;
+use serde_json;
+use background::{Background};
+
+fn read_background(path: &str) -> Result<Background, Box<dyn std::error::Error>> {
+    let background: Background = serde_json::from_str(
+        &fs::read_to_string(path)?
+    )?;
+    Ok(background)
+}
 
 fn main() {
 
@@ -40,15 +53,35 @@ fn main() {
     let statrolls = AbilityScores::from_array(rolls);
     println!("\n{:?}\n", rolls);
 
+    let bg = read_background("data/backgrounds/farmer.json")
+        .expect("Failed to load.");
+
+    println!("{:#?}", bg.equipment.A.currency.as_ref().unwrap());
+
+
+
+    std::process::exit(0);
+
+    // TUI begins here:
+
+    let term = Term::stdout();
+    term.clear_screen().unwrap();
+
     let mut u_menu;
-    let mut s_menu;
     let mut u_stat;
+    let mut s_menu;
     let mut s_stat;
-    let v_menu = vec!["New", "Load", "Exit"];
+    let mut s_tmsg = "Select an option";
+    let mut v_menu;
+
     loop {
 
+        term.clear_screen().unwrap();
+
+        v_menu = vec!["New", "Load", "Exit"];
+
         u_menu = Select::new()
-            .with_prompt("Welcome to genpc!\n")
+            .with_prompt(format!("Welcome to genpc!\n{}", s_tmsg))
             .items(&v_menu)
             .default(0)
             .interact()
@@ -57,25 +90,60 @@ fn main() {
 
         if s_menu == "New" {
 
-            for stat in Stat::ALL {
+            loop {
 
-                u_stat = Select::new()
-                    .with_prompt(format!("Choose your {} stat:", stat))
-                    .items(&rolls)
+                term.clear_screen().unwrap();
+
+                v_menu = vec!["Race", "Background", "Class", "Ability Scores", "Finish", "Cancel"];
+
+                let mut c_stat = AbilityScores::new(10);
+
+
+
+
+                u_menu = Select::new()
+                    .with_prompt(format!("Welcome to genpc!\n{}", s_tmsg))
+                    .items(&v_menu)
                     .default(0)
                     .interact()
                     .unwrap();
-                s_stat = rolls[u_stat];
+                s_menu = v_menu[u_menu];
 
-                println!("You chose: {}", s_stat);
+                if s_menu == "Ability Scores" {
 
+                    let mut v_stat = rolls.to_vec();
+
+                    for stat in Stat::ALL {
+
+                        term.clear_screen().unwrap();
+
+                        println!("Welcome to genpc!\n{:?}\n", c_stat);
+
+                        u_stat = Select::new()
+                            .with_prompt(format!("Choose your {} stat", stat))
+                            .items(&v_stat)
+                            .default(0)
+                            .interact()
+                            .unwrap();
+                        s_stat = v_stat.remove(u_stat);
+
+                        c_stat[stat] = s_stat;
+
+                    }
+
+                } else if s_menu == "Finish" || s_menu == "Cancel" {
+                    break;
+                }
             }
-        }
-
-        if (s_menu == "Exit") {
+        } else if s_menu == "Load" {
+            s_tmsg = "Load not yet implemented";
+        } else if s_menu == "Exit" {
             break;
         }
     }
+
+    term.clear_screen().unwrap();
+
 }
 
 
