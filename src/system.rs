@@ -1,5 +1,6 @@
 
 use std::ops::{Add, AddAssign, Index, IndexMut};
+use std::fmt;
 use serde::{Deserialize, Serialize};
 
 // ========================================
@@ -46,6 +47,22 @@ impl Stat {
             "CHA" => Some(Stat::CHA),
             _ => None,
         }
+    }
+}
+
+impl fmt::Display for Stat {
+
+    /// Returns the string value of the Stat object
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match self {
+            Stat::STR => "STR",
+            Stat::DEX => "DEX",
+            Stat::CON => "CON",
+            Stat::INT => "INT",
+            Stat::WIS => "WIS",
+            Stat::CHA => "CHA",
+        };
+        write!(f, "{}", name)
     }
 }
 

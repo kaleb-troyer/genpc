@@ -15,29 +15,29 @@ use crate::char::{Character};
 /// Benefits object and contents as imported from /data
 #[derive(Debug, Deserialize, Serialize, Default)]
 pub struct Benefits {
-    ability_scores: Option<ASI>,        // ability score modifier selection, see below
-    feats: Option<SelectionPool>,       // feats selection, see below
-    skill_profs: Option<SelectionPool>, // skill proficiency selection
-    tool_profs: Option<SelectionPool>,  // tool proficiency selection
-    sublcass: Option<Choice>,           // subclass selection
-    features: Option<Vec<Feature>>,     // list of primary source features, see below
-    resources: Option<Vec<Resource>>,   // list of character resources, see below
-    effects: Option<Vec<Effect>>,       // list of primary source effects, see below
+    pub ability_scores: Option<ASI>,        // ability score modifier selection, see below
+    pub feats: Option<SelectionPool>,       // feats selection, see below
+    pub skill_profs: Option<SelectionPool>, // skill proficiency selection
+    pub tool_profs: Option<SelectionPool>,  // tool proficiency selection
+    pub sublcass: Option<Choice>,           // subclass selection
+    pub features: Option<Vec<Feature>>,     // list of primary source features, see below
+    pub resources: Option<Vec<Resource>>,   // list of character resources, see below
+    pub effects: Option<Vec<Effect>>,       // list of primary source effects, see below
 }
 
-/// /// Collection of available equipment load-outs from backgrounds
-/// #[derive(Debug, Deserialize, Serialize)]
-/// pub struct Equipment {
-///     A: EquipmentOps,
-///     B: EquipmentOps
-/// }
+/// Collection of available equipment load-outs from backgrounds
+#[derive(Debug, Deserialize, Serialize)]
+pub struct Equipment {
+    pub A: EquipmentOps,
+    pub B: EquipmentOps,
+}
 
 /// Equipment load-out contents
 #[derive(Debug, Deserialize, Serialize, Default)]
-pub struct Equipment {
-    items: Option<Vec<String>>,
-    currency: Option<Currency>,
-    choose: Option<Choice>
+pub struct EquipmentOps {
+    pub items: Option<Vec<String>>,
+    pub currency: Option<Currency>, // TODO import from system
+    pub choose: Option<Choice>
 }
 
 // ========================================
@@ -169,15 +169,10 @@ pub struct Choice {
     options: ChoiceTypes,
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone)]
-#[serde(untagged)]
-pub enum ChoiceTypes {
-    Single(String),
-    Multiple(Vec<String>)
-}
-
 impl Choice {
 
+    /// Decrements the number of remaining choices and removes the
+    /// selection from the pool of options.
     pub fn choose(&mut self, i: usize) -> Result<String, ChoiceError> {
         if i >= self.options.len() {
             return Err(ChoiceError::OutOfBounds);
@@ -187,6 +182,36 @@ impl Choice {
             self.count -= 1;
             Ok(self.options.remove(i))
         }
+    }
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(untagged)]
+pub enum ChoiceTypes {
+    Single(String),
+    Multiple(Vec<String>)
+}
+
+impl ChoiceTypes {
+
+    pub fn len(&self) -> usize {
+        match self {
+            ChoiceTypes::Single(_) => 1,
+            ChoiceTypes::Multiple(v) => v.len(),
+        }
+    }
+
+    pub fn remove(&mut self, i: usize) -> String {
+        match self {
+            ChoiceTypes::Single(s) => s.clone(),
+            ChoiceTypes::Multiple(v) => v.remove(i),
+        }
+    }
+}
+
+impl Default for ChoiceTypes {
+    fn default() -> Self {
+        ChoiceTypes::Multiple(Vec::new())
     }
 }
 

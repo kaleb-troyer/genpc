@@ -1,5 +1,6 @@
 
-#### character creation process
+### character creation process
+---
 1) Choose a class
 2) Determine origin
     - select background
@@ -8,11 +9,8 @@
 4) Choose an alignment
 5) Fill in details
 
-#### tasks
-- [ ] build json data containers for...
-    - [ ] class
-    - [ ] background
-    - [ ] race
+### on hold
+---
 - [ ] import all srd data
     - [ ] races
         - [ ] aasimar
@@ -48,8 +46,32 @@
     - [ ] feats
         - [ ] tough
         - [ ] ...
+
+### on deck
+---
+
+### in progress
+---
+- [ ] json data containers
+    - [ ] add "parent" field handling for subclasses
+- [ ] build tui minimum viable product
+    - [x] stat selector
+        - [x] roller
+        - [x] select one stat (in main())
+        - [x] iterate over stats to select
+        - [x] pretty format
+    - [ ] background selector
 - [ ] rust json importer
-- [ ] cli composition
-    - [ ] input prompter
-    - [ ] input processor
+    - [ ] load background as object successfully
+    - [ ] loader graceful error handling
+    - [ ] test load each type of object
+    - [ ] full importer, saved to Vec of all data
+
+### complete
+---
+
+
+### archive
+---
+
 

@@ -1,6 +1,7 @@
 {
     "category": "class",
     "type": "subclass",
+    "parent": "fighter",
     "source": "srd",
     "id": "battle_master",
     "name": "Battle Master",
