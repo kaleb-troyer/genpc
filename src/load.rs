@@ -2,6 +2,8 @@
 use std::ops::{Add, AddAssign, Index, IndexMut};
 use serde::{Deserialize, Serialize};
 use crate::system::{Currency, Stat};
+use crate::dice::{DiceSpec};
+use crate::char::{Character};
 
 // ========================================
 // Primary Substructures from Data
@@ -23,18 +25,18 @@ pub struct Benefits {
     effects: Option<Vec<Effect>>,       // list of primary source effects, see below
 }
 
-/// Collection of available equipment load-outs from backgrounds
-#[derive(Debug, Deserialize, Serialize)]
-pub struct Equipment {
-    A: EquipmentOps,
-    B: EquipmentOps,
-}
+/// /// Collection of available equipment load-outs from backgrounds
+/// #[derive(Debug, Deserialize, Serialize)]
+/// pub struct Equipment {
+///     A: EquipmentOps,
+///     B: EquipmentOps
+/// }
 
 /// Equipment load-out contents
 #[derive(Debug, Deserialize, Serialize, Default)]
-pub struct EquipmentOps {
+pub struct Equipment {
     items: Option<Vec<String>>,
-    currency: Option<Currency>, // TODO import from system
+    currency: Option<Currency>,
     choose: Option<Choice>
 }
 
@@ -100,7 +102,7 @@ pub struct Feature {
 pub struct Resource {
     id: String,
     name: String,
-    die: Option<u8>,
+    roll: Option<DiceSpec>,
     uses: Option<u8>,
     items: Option<SelectionPool>,
 }
@@ -124,6 +126,29 @@ impl Effect {
     // Effect objects can be looped through when a given event occurs,
     // and if the event trigger matches the event, execute the function.
 
+    pub fn check(&self, event: &str) -> bool {
+        self.event == event
+    }
+
+    // !!! THIS DOESN"T WORK YET, DEVELOPMENT NOT DONE
+    pub fn apply(&self, &mut char: Character) {
+
+        // find target resource
+        for res in char.resources.iter_mut() {
+            if res.id == self.target {
+                let mut attr = res.uses;
+
+                // modify resource
+                match self.operation {
+                    "add" => attr = attr + self.value,
+                    "sub" => attr = attr - self.value,
+                    "set" => attr = self.value,
+                    _ => None
+                }
+                break;
+            }
+        }
+    }
 }
 
 // ========================================

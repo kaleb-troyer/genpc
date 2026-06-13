@@ -9,48 +9,96 @@
     "saving_throws": [ "STR", "CON" ],
     "caster_type": null,
     "benefits": {
-        "0": {
-            "skill_profs": {
-                "fixed": [],
-                "choose": { "count": 0, "options": [] }
-            },
-            "tool_profs": {
-                "fixed": [],
-                "choose": { "count": 0, "options": [] }
-            },
+        "M": {
             "armor_profs": {
-                "fixed": [],
+                "fixed": ["light_armor", "medium_armor", "shields"],
                 "choose": { "count": 0, "options": [] }
             },
             "weapon_profs": {
-                "fixed": [],
+                "fixed": ["martial_weapons"],
                 "choose": { "count": 0, "options": [] }
+            },
+        },
+        "0": {
+            "skill_profs": {
+                "fixed": [],
+                "choose": { "count": 2, "options": [
+                    "acrobatics", "animal_handling", "athletics", "history", "insight", "intimidation", "persuasion", "perception", "survival"
+                ] }
+            },
+            "armor_profs": {
+                "fixed": ["light_armor", "medium_armor", "heavy_armor", "shields"],
+                "choose": { "count": 0, "options": [] }
+            },
+            "weapon_profs": {
+                "fixed": ["simple_weapons", "martial_weapons"],
+                "choose": { "count": 0, "options": [] }
+            },
+        },
+        "1": {
+            "feats": {
+                "fixed": [],
+                "choose": { "count": 1, "options": "fighting_style_feats" }
             },
             "features": [
                 {
-                    "name": "",
-                    "description": ""
+                    "name": "Fighting Style",
+                    "description": "You have honed your martial prowess and gain a Fighting Style feat of your choice. Defense is recommended. Whenever you gain a Fighter level, you can replace the feat you chose with a different Fighting Style feat."
                 },
                 {
-                    "name": "",
-                    "description": ""
-                }
-            ],
-            "effects": []
-        }, 
-        "1": {
-            "features": [
-                {
-                    "name": "",
-                    "description": ""
+                    "name": "Second Wind",
+                    "description": "You have a limited well of physical and mental stamina that you can draw on. As a Bonus Action, you can use it to regain Hit Points equal to 1d10 plus your Fighter level. You can use this feature twice. You regain one expended use when you finish a Short Rest, and you regain all expended uses when you finish a Long Rest. When you reach certain Fighter levels, you gain more uses of this feature, as shown in the Second Wind column of the Fighter Features table."
                 },
                 {
-                    "name": "",
-                    "description": ""
+                    "name": "Weapon Mastery",
+                    "description": "Your training with weapons allows you to use the mastery properties of three kinds of Simple or Martial weapons of your choice. Whenever you finish a Long Rest, you can practice weapon drills and change one of those weapon choices. When you reach certain Fighter levels, you gain the ability to use the mastery properties of more kinds of weapons, as shown in the Weapon Mastery column of the Fighter Features table."
                 }
             ],
-            "effects": []
-        }, 
+            "resources": [
+                {
+                    "id": "second_wind",
+                    "name": "Second Wind",
+                    "when": "bonus_action",
+                    "roll": { "sides": 10, "count": 1, "bonus": "class_level" }
+                    "uses": 2
+                },
+                {
+                    "id": "weapon_masteries",
+                    "name": "Weapon Masteries",
+                    "when": "long_rest",
+                    "items": {
+                        "fixed": [],
+                        "choose": { "count": 3, "options": "weapons" }
+                    }
+                }
+            ],
+            "effects": [
+                {
+                    "target": "second_wind",
+                    "operation": "add",
+                    "event": "short_rest",
+                    "value": 1
+                },
+                {
+                    "target": "second_wind",
+                    "operation": "set",
+                    "event": "long_rest",
+                    "value": 2
+                },
+                {
+                    "target": "second_wind",
+                    "operation": "subtract",
+                    "event": "second_wind",
+                    "value": 1
+                },
+                {
+                    "target": "hit_points",
+                    "operation": "add",
+                    "event": "second_wind",
+                    "value": "roll"
+                }
+            ]
+        },
         "2": {
             "features": [
                 {
@@ -84,23 +132,18 @@
             "effects": []
         },
     },
-    "equipment": {
-        "A": {
-            "items": [],
-            "currency": {"pp": 0, "gp": 0, "sp": 0, "cp": 0},
-            "choose": {
-                "count": 0,
-                "options": []
-            }
+    "equipment": [
+        {
+            "items": ["chain_mail", "greatsword", "flail", "javelins#8", "dungeoneers_pack"],
+            "currency": {"pp": 0, "gp": 4, "sp": 0, "cp": 0},
         },
-        "B": {
-            "items": [],
-            "currency": {"pp": 0, "gp": 50, "sp": 0, "cp": 0},
+        {
+            "items": ["studded_leather_armor", "scimitar", "shortsword", "longbow", "arrows#20", "quiver", "dungeoneers_pack"],
+            "currency": {"pp": 0, "gp": 11, "sp": 0, "cp": 0},
         },
-        "C": {
-            "items": [],
+        {
             "currency": {"pp": 0, "gp": 155, "sp": 0, "cp": 0},
         }
-    },
-    "description": "You gain the following benefits: Initiative Proficiency, Initiative Swap.",
+    ],
+    "description": "",
 }

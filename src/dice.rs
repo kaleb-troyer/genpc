@@ -1,16 +1,18 @@
 
 use rand::prelude::*;
+use serde::{Deserialize, Serialize};
 
 /// Represents a roll specification (number and sides of dice).
 ///
 /// Example:
 /// ```
-/// let spec = DiceSpec{count: 1, sides: 20}; // 1d20
+/// let spec = DiceSpec{count: 1, sides: 20, bonus: 0}; // 1d20
 /// ```
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, Deserialize, Serialize)]
 pub struct DiceSpec {
     pub count: u8,
     pub sides: u8,
+    pub bonus: u8,
 }
 
 /// Represents the parameters and results of a roll.
@@ -57,8 +59,9 @@ impl Roll {
     }
 
     /// Returns the sum total of dice rolled
-    pub fn total(&self) -> u32 {
-        self.results.iter().map(|&r| r as u32).sum()
+    pub fn total(&self) -> i32 {
+        let sum: i32 = self.results.iter().map(|&r| r as u32).sum();
+        sum + self.spec.bonus as i32
     }
 
     /// Reroll one die that rolled the specified value
@@ -83,9 +86,9 @@ impl Roll {
 
     /// Reroll the dice and take the higher total (roll with advantage)
     pub fn adv(self) -> Self {
-        let reroll = Roll::new(self.spec);
-        if reroll.total() > self.total() {
-            reroll
+        let alt = Roll::new(self.spec);
+        if alt.total() > self.total() {
+            alt
         } else {
             self
         }
@@ -93,9 +96,9 @@ impl Roll {
 
     /// Reroll the dice and take the lower total (roll with disadvantage)
     pub fn disadv(self) -> Self {
-        let reroll = Roll::new(self.spec);
-        if reroll.total() < self.total() {
-            reroll
+        let alt = Roll::new(self.spec);
+        if alt.total() < self.total() {
+            alt
         } else {
             self
         }

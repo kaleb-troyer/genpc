@@ -34,13 +34,13 @@
                     "name": "Maneuvers",
                     "items": {
                         "fixed": [],
-                        "choose": { "count": 3, "options": ["battle_master_maneuvers"] }
+                        "choose": { "count": 3, "options": "battle_master_maneuvers" }
                     }
                 },
                 {
                     "id": "superiority_dice",
                     "name": "Superiority Dice",
-                    "die": 8,
+                    "roll": { "sides": 8, "count": 1, "bonus": 0 },
                     "uses": 4
                 }
             ],
@@ -52,7 +52,7 @@
                     "value": 4
                 }
             ]
-        }, 
+        },
         "7": {
             "features": [
                 {
