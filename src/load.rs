@@ -1,3 +1,8 @@
+// Contains the generic structures and substructures that make up a json import
+// from the data folder. Specific data structures and their impl for the
+// character, background, etc. are contained in their respective files.
+// 2025-06-15
+// Kaleb Troyer
 
 use std::ops::{Add, AddAssign, Index, IndexMut};
 use serde::{Deserialize, Serialize};
@@ -25,12 +30,8 @@ pub struct Benefits {
     pub effects: Option<Vec<Effect>>,       // list of primary source effects, see below
 }
 
-/// Collection of available equipment load-outs from backgrounds
-#[derive(Debug, Deserialize, Serialize)]
-pub struct Equipment {
-    pub A: EquipmentOps,
-    pub B: EquipmentOps,
-}
+/// Collection of available equipment load-outs from backgrounds and classes
+pub type Equipment = Vec<EquipmentOps>;
 
 /// Equipment load-out contents
 #[derive(Debug, Deserialize, Serialize, Default)]
@@ -45,6 +46,7 @@ pub struct EquipmentOps {
 // ========================================
 // Describes the object and set of parameters that determine how ability score
 // modifiers are selected during character creation, level-up, or multiclassing.
+// Not to be confused with the Stat object, imported from system.
 
 /// Ability score increase from character creation or level-up
 #[derive(Debug, Deserialize, Serialize)]
@@ -130,25 +132,25 @@ impl Effect {
         self.event == event
     }
 
-    // !!! THIS DOESN"T WORK YET, DEVELOPMENT NOT DONE
-    pub fn apply(&self, &mut char: Character) {
-
-        // find target resource
-        for res in char.resources.iter_mut() {
-            if res.id == self.target {
-                let mut attr = res.uses;
-
-                // modify resource
-                match self.operation {
-                    "add" => attr = attr + self.value,
-                    "sub" => attr = attr - self.value,
-                    "set" => attr = self.value,
-                    _ => None
-                }
-                break;
-            }
-        }
-    }
+    // // !!! THIS DOESN"T WORK YET, DEVELOPMENT NOT DONE
+    // pub fn apply(&self, char: &mut Character) {
+    //
+    //     // find target resource
+    //     for res in char.resources.iter_mut() {
+    //         if res.id == self.target {
+    //             let mut attr = res.uses;
+    //
+    //             // modify resource
+    //             match self.operation.as_str() {
+    //                 "add" => attr = attr + self.value,
+    //                 "sub" => attr = attr - self.value,
+    //                 "set" => attr = self.value,
+    //                 _ => None
+    //             }
+    //             break;
+    //         }
+    //     }
+    // }
 }
 
 // ========================================

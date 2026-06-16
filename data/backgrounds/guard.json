@@ -25,8 +25,8 @@
             "choose": { "count": 0, "options": [] }
         }
     }},
-    "equipment": {
-        "A": {
+    "equipment": [
+        {
             "items": ["travelers_clothes", "spear", "light_crossbow", "bolts#20", "hooded_lantern", "manacles", "quiver"],
             "currency": {"pp": 0, "gp": 12, "sp": 0, "cp": 0},
             "choose": {
@@ -34,10 +34,10 @@
                 "options": ["dice", "dragonchess", "playing_cards", "three_dragon_ante"]
             }
         },
-        "B": {
+        {
             "items": [],
             "currency": {"pp": 0, "gp": 50, "sp": 0, "cp": 0}
         }
-    },
+    ],
     "description": "Your feet ache when you remember the countless hours you spent at your post in the tower. You were trained to keep one eye looking outside the wall, watching for marauders sweeping from the nearby forest, and your other eye looking inside the wall, searching for cutpurses and troublemakers."
 }

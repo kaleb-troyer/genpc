@@ -2,6 +2,7 @@
 use crate::system::{Stat::*, AbilityScores};
 use crate::load::*;
 use std::sync::LazyLock;
+use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
 /// Feat structure and collection

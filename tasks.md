@@ -53,7 +53,11 @@
 ### in progress
 ---
 - [ ] json data containers
-    - [ ] add "parent" field handling for subclasses
+    - [x] add "parent" field handling for subclasses
+    - [ ] create a DiceRef struct for parsing json roll obj and building DiceSpec
+        - need to decide between this or a comprehensive DiceSpec object
+        - pros of DiceRef is keeping DiceSpec simple and dynamically generating DiceSpec per reference when required. DiceSpec can change, DiceRef is always the same.
+        - cons, confusion from having two Dice objects, one roll object.
 - [ ] build tui minimum viable product
     - [x] stat selector
         - [x] roller
@@ -62,10 +66,14 @@
         - [x] pretty format
     - [ ] background selector
 - [ ] rust json importer
-    - [ ] load background as object successfully
-    - [ ] loader graceful error handling
+    - [x] load background as object successfully
     - [ ] test load each type of object
+        - [ ] class
+        - [ ] subclass
+        - [ ] feats
+        - [ ] races
     - [ ] full importer, saved to Vec of all data
+    - [ ] loader graceful error handling
 
 ### complete
 ---

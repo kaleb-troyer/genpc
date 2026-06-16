@@ -8,11 +8,11 @@ use serde::{Deserialize, Serialize};
 /// ```
 /// let spec = DiceSpec{count: 1, sides: 20, bonus: 0}; // 1d20
 /// ```
-#[derive(Clone, Copy, Default, Deserialize, Serialize)]
+#[derive(Debug, Clone, Copy, Default, Deserialize, Serialize)]
 pub struct DiceSpec {
     pub count: u8,
     pub sides: u8,
-    pub bonus: u8,
+    pub bonus: i8,
 }
 
 /// Represents the parameters and results of a roll.
@@ -27,6 +27,7 @@ pub struct DiceSpec {
 /// let max = roll.max();
 /// let tot = roll.total();
 /// ```
+#[derive(Debug)]
 pub struct Roll {
     spec: DiceSpec,
     results: Vec<u8>,
@@ -60,7 +61,7 @@ impl Roll {
 
     /// Returns the sum total of dice rolled
     pub fn total(&self) -> i32 {
-        let sum: i32 = self.results.iter().map(|&r| r as u32).sum();
+        let sum: i32 = self.results.iter().map(|&r| r as i32).sum();
         sum + self.spec.bonus as i32
     }
 

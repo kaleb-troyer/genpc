@@ -5,12 +5,13 @@ mod system;
 mod class;
 mod race;
 mod char;
+mod feat;
 mod dice;
 mod load;
 
 // internal crates
 use system::{Stat, Stat::*, AbilityScores};
-use class::{Class};
+use class::{Class, Subclass};
 use race::{Race};
 use char::{Character};
 use dice::{Roll, DiceSpec};
@@ -24,7 +25,9 @@ use dialoguer::{Select, console::Term};
 use std::fs;
 use serde_json;
 use background::{Background};
+use feat::{Feat};
 
+// just read a background object
 fn read_background(path: &str) -> Result<Background, Box<dyn std::error::Error>> {
     let background: Background = serde_json::from_str(
         &fs::read_to_string(path)?
@@ -32,14 +35,30 @@ fn read_background(path: &str) -> Result<Background, Box<dyn std::error::Error>>
     Ok(background)
 }
 
+// trying loading each object one by one
+fn read_class(path: &str) -> Result<Class, Box<dyn std::error::Error>> {
+    let class: Class = serde_json::from_str(
+        &fs::read_to_string(path)?
+    )?;
+    Ok(class)
+}
+
+fn read_feat(path: &str) -> Result<Feat, Box<dyn std::error::Error>> {
+    let feat: Feat = serde_json::from_str(
+        &fs::read_to_string(path)?
+    )?;
+    Ok(feat)
+}
+
+
 fn main() {
 
     // this is a stat roller per 4d6 & drop the lowest rules
-    let statspec = DiceSpec { count: 4, sides: 6 };
+    let statspec = DiceSpec { count: 4, sides: 6, bonus: 0 };
     let rolls: [u8; 6] = loop {
         let rolls: [u8; 6] = std::array::from_fn(|_| {
             let r = Roll::new(statspec);
-            (r.total() - r.min() as u32) as u8
+            (r.total() - r.min() as i32) as u8
         });
 
         let score: u32 = rolls
@@ -56,7 +75,16 @@ fn main() {
     let bg = read_background("data/backgrounds/farmer.json")
         .expect("Failed to load.");
 
-    println!("{:#?}", bg.equipment.A.currency.as_ref().unwrap());
+    let class = read_class("data/classes/fighter/fighter.json")
+        .expect("Failed to load.");
+
+    // let feat = read_class("data/feats/alert.json")
+    //     .expect("Failed to load.");
+
+
+    // try to load and store all json items
+
+
 
 
 

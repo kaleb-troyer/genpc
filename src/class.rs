@@ -12,8 +12,8 @@ pub struct Class {
     hit_die: u8,
     primary_ability: Vec<String>,       // vector of STR, DEX, CON, INT, WIS, or CHA
     saving_throws: Vec<String>,         // " "
-    caster_type: String,                // indicates full, half, pact, etc.
-    benefits: HashMap<u8, Benefits>,    // see load.rs
+    caster_type: Option<String>,        // indicates full, half, pact, etc.
+    benefits: HashMap<String, Benefits> // see load.rs
 }
 
 /// Subclass structure and collection
@@ -22,9 +22,10 @@ pub struct Subclass {
     id: String,
     name: String,
     source: String,
+    parent: String,                     // defines the parent of the subclass; is for collection
     saving_throws: Option<Vec<String>>,
     caster_type: String,
-    benefits: HashMap<u8, Benefits>,
+    benefits: HashMap<String, Benefits>,
     description: String,
 }
 

@@ -17,7 +17,7 @@
             "weapon_profs": {
                 "fixed": ["martial_weapons"],
                 "choose": { "count": 0, "options": [] }
-            },
+            }
         },
         "0": {
             "skill_profs": {
@@ -33,7 +33,7 @@
             "weapon_profs": {
                 "fixed": ["simple_weapons", "martial_weapons"],
                 "choose": { "count": 0, "options": [] }
-            },
+            }
         },
         "1": {
             "feats": {
@@ -111,7 +111,7 @@
                 }
             ],
             "effects": []
-        }, 
+        },
         "3": {
             "subclass": {
                 "choose": {
@@ -130,7 +130,7 @@
                 }
             ],
             "effects": []
-        },
+        }
     },
     "equipment": [
         {
@@ -145,5 +145,5 @@
             "currency": {"pp": 0, "gp": 155, "sp": 0, "cp": 0},
         }
     ],
-    "description": "",
+    "description": ""
 }
