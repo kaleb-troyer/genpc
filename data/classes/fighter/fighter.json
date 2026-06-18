@@ -59,7 +59,7 @@
                     "id": "second_wind",
                     "name": "Second Wind",
                     "when": "bonus_action",
-                    "roll": { "sides": 10, "count": 1, "bonus": "class_level" }
+                    "roll": { "sides": 10, "count": 1, "bonus": "class_level" },
                     "uses": 2
                 },
                 {
@@ -135,14 +135,14 @@
     "equipment": [
         {
             "items": ["chain_mail", "greatsword", "flail", "javelins#8", "dungeoneers_pack"],
-            "currency": {"pp": 0, "gp": 4, "sp": 0, "cp": 0},
+            "currency": {"pp": 0, "gp": 4, "sp": 0, "cp": 0}
         },
         {
             "items": ["studded_leather_armor", "scimitar", "shortsword", "longbow", "arrows#20", "quiver", "dungeoneers_pack"],
-            "currency": {"pp": 0, "gp": 11, "sp": 0, "cp": 0},
+            "currency": {"pp": 0, "gp": 11, "sp": 0, "cp": 0}
         },
         {
-            "currency": {"pp": 0, "gp": 155, "sp": 0, "cp": 0},
+            "currency": {"pp": 0, "gp": 155, "sp": 0, "cp": 0}
         }
     ],
     "description": ""

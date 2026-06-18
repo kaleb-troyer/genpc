@@ -1,6 +1,8 @@
 
 use rand::prelude::*;
 use serde::{Deserialize, Serialize};
+use crate::char::{Character};
+use crate::load::{DynMod};
 
 /// Represents a roll specification (number and sides of dice).
 ///
@@ -105,5 +107,38 @@ impl Roll {
         }
     }
 }
+
+/// A dice specification that may reference a character attribute for its bonus,
+/// resolved into a [`DiceSpec`] at runtime.
+///
+/// Example:
+/// ```
+/// let dref = DiceRef { ... };
+/// let roll = Roll::new(
+///     dref.getspec(&MyCharacter)
+/// ).adv();
+/// ```
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct DiceRef {
+    pub count: u8,
+    pub sides: u8,
+    pub bonus: DynMod, // See load.rs
+}
+
+// DiceRef methods
+impl DiceRef {
+
+    /// Unpacks the DiceRef and returns a fixed DiceSpec
+    fn getspec(&self, char: &Character) -> DiceSpec {
+        let bval: i8 = match self.bonus {
+            DynMod::Flat(n) => n,
+            DynMod::Reference(ref s) => 0 // resolve later
+        };
+
+        DiceSpec { count: self.count, sides: self.sides, bonus: bval }
+    }
+}
+
+
 
 // EOF

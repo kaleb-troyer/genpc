@@ -7,7 +7,7 @@
 use std::ops::{Add, AddAssign, Index, IndexMut};
 use serde::{Deserialize, Serialize};
 use crate::system::{Currency, Stat};
-use crate::dice::{DiceSpec};
+use crate::dice::{DiceRef};
 use crate::char::{Character};
 
 // ========================================
@@ -37,7 +37,7 @@ pub type Equipment = Vec<EquipmentOps>;
 #[derive(Debug, Deserialize, Serialize, Default)]
 pub struct EquipmentOps {
     pub items: Option<Vec<String>>,
-    pub currency: Option<Currency>, // TODO import from system
+    pub currency: Option<Currency>,
     pub choose: Option<Choice>
 }
 
@@ -104,7 +104,7 @@ pub struct Feature {
 pub struct Resource {
     id: String,
     name: String,
-    roll: Option<DiceSpec>,
+    roll: Option<DiceRef>,
     uses: Option<u8>,
     items: Option<SelectionPool>,
 }
@@ -115,7 +115,16 @@ pub struct Effect {
     target: String,
     operation: String,
     event: String,
-    value: u32,
+    value: DynMod,
+}
+
+/// Enumeration which loads dynamic modifiers as either a numerical value or
+/// character attribute reference.
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(untagged)]
+pub enum DynMod {
+    Flat(i8),
+    Reference(String),
 }
 
 impl Effect {

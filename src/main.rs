@@ -78,8 +78,12 @@ fn main() {
     let class = read_class("data/classes/fighter/fighter.json")
         .expect("Failed to load.");
 
-    // let feat = read_class("data/feats/alert.json")
-    //     .expect("Failed to load.");
+    let feat = read_class("data/feats/alert.json")
+        .expect("Failed to load.");
+
+
+
+    // println!("{:#?}", class);
 
 
     // try to load and store all json items
