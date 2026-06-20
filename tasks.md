@@ -49,15 +49,11 @@
 
 ### on deck
 ---
+- [ ] character attribute from string descriptor
+
 
 ### in progress
 ---
-- [ ] json data containers
-    - [x] add "parent" field handling for subclasses
-    - [ ] create a DiceRef struct for parsing json roll obj and building DiceSpec
-        - need to decide between this or a comprehensive DiceSpec object
-        - pros of DiceRef is keeping DiceSpec simple and dynamically generating DiceSpec per reference when required. DiceSpec can change, DiceRef is always the same.
-        - cons, confusion from having two Dice objects, one roll object.
 - [ ] build tui minimum viable product
     - [x] stat selector
         - [x] roller
@@ -68,15 +64,21 @@
 - [ ] rust json importer
     - [x] load background as object successfully
     - [ ] test load each type of object
-        - [ ] class
-        - [ ] subclass
-        - [ ] feats
+        - [x] class
+        - [x] subclass
+        - [x] feats
         - [ ] races
     - [ ] full importer, saved to Vec of all data
     - [ ] loader graceful error handling
 
 ### complete
 ---
+- [x] json data containers
+    - [x] add "parent" field handling for subclasses
+    - [x] create a DiceRef struct for parsing json roll obj and building DiceSpec
+        - need to decide between this or a comprehensive DiceSpec object
+        - pros of DiceRef is keeping DiceSpec simple and dynamically generating DiceSpec per reference when required. DiceSpec can change, DiceRef is always the same.
+        - cons, confusion from having two Dice objects, one roll object.
 
 
 ### archive

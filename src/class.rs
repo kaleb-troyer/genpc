@@ -24,7 +24,7 @@ pub struct Subclass {
     source: String,
     parent: String,                     // defines the parent of the subclass; is for collection
     saving_throws: Option<Vec<String>>,
-    caster_type: String,
+    caster_type: Option<String>,
     benefits: HashMap<String, Benefits>,
     description: String,
 }

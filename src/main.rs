@@ -23,6 +23,7 @@ use dialoguer::{Select, console::Term};
 
 
 use std::fs;
+use std::path::Path;
 use serde_json;
 use background::{Background};
 use feat::{Feat};
@@ -43,12 +44,45 @@ fn read_class(path: &str) -> Result<Class, Box<dyn std::error::Error>> {
     Ok(class)
 }
 
+fn read_sc(path: &str) -> Result<Subclass, Box<dyn std::error::Error>> {
+    let sc: Subclass = serde_json::from_str(
+        &fs::read_to_string(path)?
+    )?;
+    Ok(sc)
+}
+
 fn read_feat(path: &str) -> Result<Feat, Box<dyn std::error::Error>> {
     let feat: Feat = serde_json::from_str(
         &fs::read_to_string(path)?
     )?;
     Ok(feat)
 }
+
+fn read_race(path: &str) -> Result<Race, Box<dyn std::error::Error>> {
+    let race: Race = serde_json::from_str(
+        &fs::read_to_string(path)?
+    )?;
+    Ok(race)
+}
+
+fn get_data_test(dir: &Path) -> Result<(), Box<dyn std::error::Error>> {
+
+    if dir.is_dir() {
+
+        for entry in fs::read_dir(dir)? {
+
+            println!("{:#?}", entry);
+
+        }
+
+    }
+
+    Ok(())
+
+}
+
+
+
 
 
 fn main() {
@@ -78,17 +112,25 @@ fn main() {
     let class = read_class("data/classes/fighter/fighter.json")
         .expect("Failed to load.");
 
-    let feat = read_class("data/feats/alert.json")
+    let feat = read_feat("data/feats/alert.json")
         .expect("Failed to load.");
 
+    let sc = read_sc("data/classes/fighter/battle_master.json")
+        .expect("Failed to load.");
 
+    // let race = read_race("data/races/human.json")
+    //     .expect("Failed to load.");
 
+    // println!("{:#?}", bg);
     // println!("{:#?}", class);
+    // println!("{:#?}", sc);
+    // println!("{:#?}", feat);
+    // println!("{:#?}", race);
 
 
     // try to load and store all json items
 
-
+    get_data_test(Path::new("./data"));
 
 
 
