@@ -7,7 +7,7 @@
     "benefits": { "0": {
         "ability_scores": {
             "value": 1, "count": 3, "maxper": 2,
-            "stats": [ "STR", "CON", "WIS" ],
+            "stats": [ "STR", "CON", "WIS" ]
         },
         "feats": {
             "fixed": ["alert"],

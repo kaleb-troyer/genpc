@@ -21,7 +21,7 @@ use std::collections::HashMap;
 use dialoguer::{Select, console::Term};
 
 
-
+use std::io;
 use std::fs;
 use std::path::Path;
 use serde_json;
@@ -65,7 +65,7 @@ fn read_race(path: &str) -> Result<Race, Box<dyn std::error::Error>> {
     Ok(race)
 }
 
-fn get_data_test(dir: &Path) -> Result<(), Box<dyn std::error::Error>> {
+fn get_data_test(dir: &Path) -> io::Result<()> {
 
     if dir.is_dir() {
 
@@ -75,16 +75,16 @@ fn get_data_test(dir: &Path) -> Result<(), Box<dyn std::error::Error>> {
 
             if Path::new(&entry.path()).is_dir() {
 
-                get_data_test(Path::new(&entry.path()));
+                get_data_test(Path::new(&entry.path()))?;
 
             } else {
 
-                println!("{:#?}", entry.path());
+                let entry = fs::read_to_string(&Path::new(&entry.path()))?;
+                let etype: serde_json::Value = serde_json::from_str(
+                    &entry
+                )?;
 
-                let entry = fs::read_to_string(&Path::new(&entry.path()));
-                println!("{:#?}", entry?);
-
-                std::process::exit(0);
+                println!("{:#?} -> {:#?}", &etype["name"], &etype["category"]);
 
             }
 
@@ -100,7 +100,7 @@ fn get_data_test(dir: &Path) -> Result<(), Box<dyn std::error::Error>> {
 
 
 
-fn main() {
+fn main() -> io::Result<()> {
 
     // this is a stat roller per 4d6 & drop the lowest rules
     let statspec = DiceSpec { count: 4, sides: 6, bonus: 0 };

@@ -63,12 +63,15 @@
     - [ ] background selector
 - [ ] rust json importer
     - [x] load background as object successfully
-    - [ ] test load each type of object
+    - [x] test load each type of object
         - [x] class
         - [x] subclass
         - [x] feats
-        - [ ] races
+        - [x] races
     - [ ] full importer, saved to Vec of all data
+        - [x] complete file iterator
+        - [x] category checker
+        - [ ] list generate and save
     - [ ] loader graceful error handling
 
 ### complete
