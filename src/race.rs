@@ -11,8 +11,8 @@ pub struct Race {
     name: String,
     source: String,
     #[serde(rename = "type")]
-    kind: String,
-    size: Choice,
+    kind: String,           // System-specific, e.g. "humanoid", etc.
+    size: SelectionPool,    // System-specific, e.g. "small", "medium", etc.
     speed: u8,
     benefits: HashMap<u8, Benefits>,
     description: String,

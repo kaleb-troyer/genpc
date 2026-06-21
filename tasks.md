@@ -62,6 +62,8 @@
         - [x] pretty format
     - [ ] background selector
 - [ ] rust json importer
+    - [ ] feature object and loader
+        - NOTE: clarify overlap between feature json and json feature field
     - [x] load background as object successfully
     - [x] test load each type of object
         - [x] class
@@ -73,6 +75,9 @@
         - [x] category checker
         - [ ] list generate and save
     - [ ] loader graceful error handling
+    - [ ] consider moving Database to new data.rs file
+        - [ ] add an "add" function to impl for new content
+        - what would it own besides database impl?
 
 ### complete
 ---

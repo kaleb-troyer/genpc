@@ -28,6 +28,9 @@ use serde_json;
 use background::{Background};
 use feat::{Feat};
 
+use load::{Database};
+
+
 // just read a background object
 fn read_background(path: &str) -> Result<Background, Box<dyn std::error::Error>> {
     let background: Background = serde_json::from_str(
@@ -65,7 +68,7 @@ fn read_race(path: &str) -> Result<Race, Box<dyn std::error::Error>> {
     Ok(race)
 }
 
-fn get_data_test(dir: &Path) -> io::Result<()> {
+fn get_data_test(dir: &Path, db: &mut Database) -> io::Result<()> {
 
     if dir.is_dir() {
 
@@ -75,7 +78,7 @@ fn get_data_test(dir: &Path) -> io::Result<()> {
 
             if Path::new(&entry.path()).is_dir() {
 
-                get_data_test(Path::new(&entry.path()))?;
+                get_data_test(Path::new(&entry.path()), db)?;
 
             } else {
 
@@ -84,7 +87,29 @@ fn get_data_test(dir: &Path) -> io::Result<()> {
                     &entry
                 )?;
 
-                println!("{:#?} -> {:#?}", &etype["name"], &etype["category"]);
+                match &etype["category"].as_str() {
+                    Some("background") => {
+                        println!("{:#?} -> {:#?}", &etype["name"], &etype["category"]);
+                        db.backgrounds.push(serde_json::from_str(&entry)?);
+                    }
+                    Some("feature") => {
+                        println!("{:#?} -> {:#?}", &etype["name"], &etype["category"]);
+
+                    }
+                    Some("class") => {
+                        println!("{:#?} -> {:#?}", &etype["name"], &etype["category"]);
+                        db.classes.push(serde_json::from_str(&entry)?);
+                    }
+                    Some("feat") => {
+                        println!("{:#?} -> {:#?}", &etype["name"], &etype["category"]);
+                        db.feats.push(serde_json::from_str(&entry)?);
+                    }
+                    Some("race") => {
+                        println!("{:#?} -> {:#?}", &etype["name"], &etype["category"]);
+                        db.races.push(serde_json::from_str(&entry)?);
+                    }
+                    _ => println!("unknown :("),
+                };
 
             }
 
@@ -133,8 +158,8 @@ fn main() -> io::Result<()> {
     let sc = read_sc("data/classes/fighter/battle_master.json")
         .expect("Failed to load.");
 
-    // let race = read_race("data/races/human.json")
-    //     .expect("Failed to load.");
+    let race = read_race("data/races/human.json")
+        .expect("Failed to load.");
 
     // println!("{:#?}", bg);
     // println!("{:#?}", class);
@@ -145,9 +170,10 @@ fn main() -> io::Result<()> {
 
     // try to load and store all json items
 
-    get_data_test(Path::new("./data"));
+    let mut db = Database::new();
+    get_data_test(Path::new("./data"), &mut db);
 
-
+    println!("{:#?}", db);
 
     std::process::exit(0);
 

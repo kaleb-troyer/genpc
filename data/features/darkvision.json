@@ -1,0 +1,9 @@
+{
+    "category": "feature",
+    "type": "unset",
+    "source": "srd",
+    "id": "darkvision",
+    "name": "Darkvision",
+    "description": "You gain the following benefits: Initiative Proficiency, Initiative Swap.",
+    "repeatable": false
+}
