@@ -71,7 +71,22 @@ fn get_data_test(dir: &Path) -> Result<(), Box<dyn std::error::Error>> {
 
         for entry in fs::read_dir(dir)? {
 
-            println!("{:#?}", entry);
+            let entry = entry?;
+
+            if Path::new(&entry.path()).is_dir() {
+
+                get_data_test(Path::new(&entry.path()));
+
+            } else {
+
+                println!("{:#?}", entry.path());
+
+                let entry = fs::read_to_string(&Path::new(&entry.path()));
+                println!("{:#?}", entry?);
+
+                std::process::exit(0);
+
+            }
 
         }
 
