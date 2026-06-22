@@ -1,21 +1,15 @@
 // Contains the generic structures and substructures that make up a json import
 // from the data folder. Specific data structures and their impl for the
 // character, background, etc. are contained in their respective files.
-// 2025-06-15
+// 2026-06-15
 // Kaleb Troyer
 
 use std::ops::{Add, AddAssign, Index, IndexMut};
+
 use serde::{Deserialize, Serialize};
 
 use crate::system::{Currency, Stat};
 use crate::dice::{DiceRef};
-use crate::char::{Character};
-use crate::feat::{Feat};
-use crate::race::{Race};
-use crate::class::{Class};
-use crate::background::{Background};
-
-
 
 // ========================================
 // Primary Substructures from Data
@@ -240,36 +234,5 @@ pub enum ChoiceError {
     OutOfBounds,
     NoChoicesLeft,
 }
-
-// ========================================
-// Loaded Database and Implementation
-// ========================================
-// Database is the container for all loaded json data from the data folder.
-// Encapsulation of the data provides system cohesion, a means for simpler
-// function signatures, and brings data lifetime clarity. The implementation
-// provides functions for the collection of data entries which match given field
-// specifications.
-
-/// Holds all imported data
-#[derive(Debug, Deserialize, Serialize, Default)]
-pub struct Database {
-    pub feats: Vec<Feat>,
-    pub races: Vec<Race>,
-    pub backgrounds: Vec<Background>,
-    pub classes: Vec<Class>,
-}
-
-// Database constructor
-impl Database {
-    pub fn new() -> Self {
-        Database {
-            feats: vec![],
-            races: vec![],
-            backgrounds: vec![],
-            classes: vec![]
-        }
-    }
-}
-
 
 // EOF

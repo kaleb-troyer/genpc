@@ -1,6 +1,10 @@
+// <comment>
+// 2026-06-21
+// Kaleb Troyer
 
 use std::ops::{Add, AddAssign, Index, IndexMut};
 use std::fmt;
+
 use serde::{Deserialize, Serialize};
 
 // ========================================

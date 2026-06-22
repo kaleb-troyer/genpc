@@ -49,11 +49,16 @@
 
 ### on deck
 ---
-- [ ] character attribute from string descriptor
-
+- [ ] (1) character struct
+- [ ] (1) features struct and loader
+    - NOTE: clarify overlap between feature json and json feature field
+- [ ] (3) functionality for accessing character attributes from string descriptor
+- [ ] (3) choose implementation
 
 ### in progress
 ---
+- [ ] rust json importer
+    - [ ] loader graceful error handling
 - [ ] build tui minimum viable product
     - [x] stat selector
         - [x] roller
@@ -61,23 +66,6 @@
         - [x] iterate over stats to select
         - [x] pretty format
     - [ ] background selector
-- [ ] rust json importer
-    - [ ] feature object and loader
-        - NOTE: clarify overlap between feature json and json feature field
-    - [x] load background as object successfully
-    - [x] test load each type of object
-        - [x] class
-        - [x] subclass
-        - [x] feats
-        - [x] races
-    - [ ] full importer, saved to Vec of all data
-        - [x] complete file iterator
-        - [x] category checker
-        - [ ] list generate and save
-    - [ ] loader graceful error handling
-    - [ ] consider moving Database to new data.rs file
-        - [ ] add an "add" function to impl for new content
-        - what would it own besides database impl?
 
 ### complete
 ---
@@ -87,6 +75,18 @@
         - need to decide between this or a comprehensive DiceSpec object
         - pros of DiceRef is keeping DiceSpec simple and dynamically generating DiceSpec per reference when required. DiceSpec can change, DiceRef is always the same.
         - cons, confusion from having two Dice objects, one roll object.
+- [x] consider moving Database to new data.rs file
+    - [x] add an "add" function to impl for new content
+- [x] load background as object successfully
+- [x] test load each type of object
+    - [x] class
+    - [x] subclass
+    - [x] feats
+    - [x] races
+- [x] full importer, saved to Vec of all data
+    - [x] complete file iterator
+    - [x] category checker
+    - [x] list generate and save
 
 
 ### archive

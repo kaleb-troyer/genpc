@@ -1,8 +1,13 @@
+// <comment>
+// 2026-06-21
+// Kaleb Troyer
+
+use std::collections::HashMap;
+
+use serde::{Deserialize, Serialize};
 
 use crate::system::{Stat::*, AbilityScores, Coin::*, Currency};
 use crate::load::*;
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Background {

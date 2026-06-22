@@ -1,3 +1,6 @@
+// <comment>
+// 2026-06-21
+// Kaleb Troyer
 
 use crate::system::{Stat::*, AbilityScores};
 use crate::load::*;

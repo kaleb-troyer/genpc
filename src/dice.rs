@@ -1,7 +1,10 @@
+// <comment>
+// 2026-06-21
+// Kaleb Troyer
 
 use rand::prelude::*;
 use serde::{Deserialize, Serialize};
-use crate::char::{Character};
+use crate::character::{Character};
 use crate::load::{DynMod};
 
 /// Represents a roll specification (number and sides of dice).

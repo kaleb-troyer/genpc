@@ -1,7 +1,12 @@
+// <comment>
+// 2026-06-21
+// Kaleb Troyer
+
+use std::collections::HashMap;
+
+use serde::{Deserialize, Serialize};
 
 use crate::load::*;
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 /// Class structure and collection
 #[derive(Debug, Deserialize, Serialize, Default)]
