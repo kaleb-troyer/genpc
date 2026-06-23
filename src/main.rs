@@ -49,11 +49,10 @@ fn main() -> io::Result<()> {
     // try to load and store all json items
 
     let mut db = Database::new();
-    db.fetch(Path::new("./data"));
+    db.fetch(Path::new("./data"))?;
 
-    println!("{:#?}", db);
-
-
+    // println!("{:#?}", db);
+    // println!("{:#?}", db.races);
 
 
 

@@ -14,6 +14,16 @@ use crate::class::{Class};
 use crate::feat::{Feat};
 use crate::race::{Race};
 
+// simplifies .add_entry(), not strictly necessary
+macro_rules! push {
+    ($entry:expr, $target:expr, $type:ty) => {
+        match serde_json::from_str::<$type>($entry) {
+            Ok(obj) => $target.push(obj),
+            Err(e) => return Err(io::Error::new(io::ErrorKind::InvalidData, e)),
+        }
+    };
+}
+
 // ========================================
 // Loaded Database and Implementation
 // ========================================
@@ -57,9 +67,14 @@ impl Database {
                     self.fetch(&epath)?;
                 } else {
                     let entry = fs::read_to_string(&epath)?;
-                    let evals: serde_json::Value = serde_json::from_str(&entry)?;
-
-                    self.add_entry(&evals, &entry)?;
+                    match serde_json::from_str::<serde_json::Value>(&entry) {
+                        Ok(evals) => {
+                            if let Err(e) = self.add_entry(&evals, &entry) {
+                                eprintln!("[{:?}] {e}", epath);
+                            }
+                        }
+                        Err(e) => eprintln!("[{:?}] Invalid JSON: {e}", epath),
+                    }
                 }
             }
         }
@@ -74,20 +89,20 @@ impl Database {
 
         match &evals["category"].as_str() {
             Some("background") => {
-                self.backgrounds.push(serde_json::from_str(entry)?);
+                push!(entry, self.backgrounds, Background)
             }
             Some("feature") => {
                 println!("Features not yet implemented.");
-                // self.features.push(serde_json::from_str(entry)?);
+                // feature impl goes here
             }
             Some("class") => {
-                self.classes.push(serde_json::from_str(entry)?);
+                push!(entry, self.classes, Class)
             }
             Some("feat") => {
-                self.feats.push(serde_json::from_str(entry)?);
+                push!(entry, self.feats, Feat)
             }
             Some("race") => {
-                self.races.push(serde_json::from_str(entry)?);
+                push!(entry, self.races, Race)
             }
             _ => println!("unknown :("),
         }
@@ -97,5 +112,7 @@ impl Database {
     }
 
 }
+
+
 
 // EOF

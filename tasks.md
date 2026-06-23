@@ -58,7 +58,8 @@
 ### in progress
 ---
 - [ ] rust json importer
-    - [ ] loader graceful error handling
+    - [x] loader graceful error handling
+    - [ ] separate class and subclass loading (maybe, should let subclass: Class;?)
 - [ ] build tui minimum viable product
     - [x] stat selector
         - [x] roller
