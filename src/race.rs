@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
 use crate::system::{Stat::*, AbilityScores};
-use crate::load::*;
+use crate::common::*;
 
 /// Species structure and collection
 #[derive(Debug, Deserialize, Serialize, Default)]

@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
 use crate::system::{Stat::*, AbilityScores, Coin::*, Currency};
-use crate::load::*;
+use crate::common::*;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Background {

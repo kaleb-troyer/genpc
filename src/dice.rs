@@ -4,8 +4,9 @@
 
 use rand::prelude::*;
 use serde::{Deserialize, Serialize};
+
 use crate::character::{Character};
-use crate::load::{DynMod};
+use crate::common::{DynMod};
 
 /// Represents a roll specification (number and sides of dice).
 ///

@@ -2,11 +2,13 @@
 // 2026-06-21
 // Kaleb Troyer
 
-use crate::system::{Stat::*, AbilityScores};
-use crate::load::*;
 use std::sync::LazyLock;
 use std::collections::HashMap;
+
 use serde::{Deserialize, Serialize};
+
+use crate::system::{Stat::*, AbilityScores};
+use crate::common::*;
 
 /// Feat structure and collection
 #[derive(Debug, Deserialize, Serialize, Default)]

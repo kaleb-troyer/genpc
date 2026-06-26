@@ -1,4 +1,4 @@
-// <comment>
+// Contains the core database object and functions for populating the database.
 // 2026-06-21
 // Kaleb Troyer
 
@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::background::{Background};
 use crate::character::{Character};
-use crate::class::{Class};
+use crate::class::{Class, Subclass};
 use crate::feat::{Feat};
 use crate::race::{Race};
 
@@ -32,6 +32,9 @@ macro_rules! push {
 // function signatures, and brings data lifetime clarity. The implementation
 // provides functions for the collection of data entries which match given field
 // specifications.
+//
+// Unknown fields in the json are silenty ignored to avoid breaking homebrew on
+// updates and generally create a more premissive environment for homebrewers.
 
 /// Holds all imported data
 #[derive(Debug, Deserialize, Serialize, Default)]
@@ -40,6 +43,7 @@ pub struct Database {
     pub races: Vec<Race>,
     pub backgrounds: Vec<Background>,
     pub classes: Vec<Class>,
+    pub subclasses: Vec<Subclass>,
 }
 
 // Database implementation
@@ -51,7 +55,8 @@ impl Database {
             feats: vec![],
             races: vec![],
             backgrounds: vec![],
-            classes: vec![]
+            classes: vec![],
+            subclasses: vec![]
         }
     }
 
@@ -96,7 +101,15 @@ impl Database {
                 // feature impl goes here
             }
             Some("class") => {
-                push!(entry, self.classes, Class)
+                match &evals["type"].as_str() {
+                    Some("primary") => push!(entry, self.classes, Class),
+                    Some("subclass") => push!(entry, self.subclasses, Subclass),
+                    _ => return Err(
+                        io::Error::new(
+                            io::ErrorKind::InvalidData, format!("key-value error (\"type\": {})", evals["type"])
+                        )
+                    ),
+                }
             }
             Some("feat") => {
                 push!(entry, self.feats, Feat)
@@ -104,7 +117,11 @@ impl Database {
             Some("race") => {
                 push!(entry, self.races, Race)
             }
-            _ => println!("unknown :("),
+            _ => return Err(
+                io::Error::new(
+                    io::ErrorKind::InvalidData, format!("key-value error (\"category\": {})", evals["category"])
+                )
+            ),
         }
 
         Ok(())

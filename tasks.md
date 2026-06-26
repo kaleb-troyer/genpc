@@ -59,7 +59,17 @@
 ---
 - [ ] rust json importer
     - [x] loader graceful error handling
-    - [ ] separate class and subclass loading (maybe, should let subclass: Class;?)
+    - [x] separate class and subclass loading (maybe, should let subclass: Class;? -> No! they are distinct, keep them that way)
+    - [ ] features struct
+        - [ ] ...and loader
+        - how to implement? consider vision:
+            - does vision belong to Benefits at top level, Effects, or is it it's own field?
+                - probably an effect
+            - what about spells? -> their own struct w/ benefits and duration field
+    - [ ] character struct
+        - [ ] ...and loader
+    - [ ] item struct
+    - [ ] spell struct
 - [ ] build tui minimum viable product
     - [x] stat selector
         - [x] roller

@@ -58,14 +58,14 @@
                 {
                     "id": "second_wind",
                     "name": "Second Wind",
-                    "when": "bonus_action",
+                    "cost": "bonus_action",
                     "roll": { "sides": 10, "count": 1, "bonus": "class_level" },
                     "uses": 2
                 },
                 {
                     "id": "weapon_masteries",
                     "name": "Weapon Masteries",
-                    "when": "long_rest",
+                    "cost": "long_rest",
                     "items": {
                         "fixed": [],
                         "choose": { "count": 3, "options": "weapons" }

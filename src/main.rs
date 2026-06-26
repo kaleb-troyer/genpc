@@ -6,11 +6,11 @@
 mod background;
 mod system;
 mod class;
+mod common;
 mod race;
 mod character;
 mod feat;
 mod dice;
-mod load;
 mod data;
 
 // imports

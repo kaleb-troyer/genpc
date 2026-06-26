@@ -6,7 +6,7 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::load::*;
+use crate::common::*;
 
 /// Class structure and collection
 #[derive(Debug, Deserialize, Serialize, Default)]
@@ -18,7 +18,8 @@ pub struct Class {
     primary_ability: Vec<String>,       // vector of STR, DEX, CON, INT, WIS, or CHA
     saving_throws: Vec<String>,         // " "
     caster_type: Option<String>,        // indicates full, half, pact, etc.
-    benefits: HashMap<String, Benefits> // see load.rs
+    benefits: HashMap<String, Benefits>,// see load.rs
+    description: String,
 }
 
 /// Subclass structure and collection
