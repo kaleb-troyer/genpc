@@ -64,7 +64,7 @@
         - [ ] ...and loader
         - how to implement? consider vision:
             - does vision belong to Benefits at top level, Effects, or is it it's own field?
-                - probably an effect
+                - probably an effect? too complicated for effect
             - what about spells? -> their own struct w/ benefits and duration field
     - [ ] character struct
         - [ ] ...and loader
