@@ -31,6 +31,76 @@ pub struct Benefits {
     pub effects: Option<Vec<Effect>>,       // list of primary source effects, see below
 }
 
+// =============================================
+//
+// pub struct Benefits {
+//     pub proficiencies: Option<Proficiency>,
+//     pub features: Option<Vec<Feature>>,
+// }
+//
+// pub struct Proficiency {
+//     pub skills: Option<SelectionPool>,
+//     pub tools: Option<SelectionPool>,
+//     pub langs: Option<SelectionPool>,
+//     pub armor: Option<SelectionPool>,
+//     pub weaps: Option<SelectionPool>,
+// }
+//
+// pub struct Feature {
+//     pub id: String,
+//     pub name: String,
+//     pub roll: ???,
+//     pub when: String,
+//     pub uses: u8,
+//     pub items: ???,
+//     pub effects: Option<Vec<Effect>>,
+// }
+//
+//
+// pub struct Spell {
+//     pub id: String,
+//     pub name: String,
+//     pub category: String,
+//     #[serde(rename = "type")]
+//     pub kind: String,
+//     pub level: u8,
+//     pub school: String,
+//     pub ritual: bool,
+//     pub components: {
+//          pub acts: Vec<String>,
+//          pub cost: u32,
+//          pub item: String,
+//          pub desc: String,
+//     },
+//     pub usage: Usage,
+//     pub description: String,
+// }
+//
+// pub struct Usage {
+//     pub duration: u32,
+//     pub action: String,
+//     pub range: u32,
+//     pub damage: Damage,
+//     pub save: ???,
+//     pub shape: Shape,
+//     pub effects: Option<Vec<Effect>>,
+// }
+//
+// pub struct Shape {
+//     pub size: u32,
+//     pub form: String, // or enum
+//     pub placement: bool, // unsure if needed, false means centered on character, could just encode via usage range
+// }
+//
+// pub struct Damage {
+//     pub roll: ???,
+//     pub ability: ???,
+//     pub bonus: ???,
+//     pub proficiency: bool,
+// }
+//
+// =============================================
+
 /// Collection of available equipment load-outs from backgrounds and classes
 pub type Equipment = Vec<EquipmentOps>;
 

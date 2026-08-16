@@ -77,25 +77,19 @@
                     "target": "second_wind",
                     "operation": "add",
                     "event": "short_rest",
-                    "value": 1
-                },
-                {
-                    "target": "second_wind",
-                    "operation": "set",
-                    "event": "long_rest",
-                    "value": 2
+                    "value": [1]
                 },
                 {
                     "target": "second_wind",
                     "operation": "subtract",
                     "event": "second_wind",
-                    "value": 1
+                    "value": [1]
                 },
                 {
                     "target": "hit_points",
                     "operation": "add",
                     "event": "second_wind",
-                    "value": "roll"
+                    "value": [{ "count": 1, "sides": 10 }]
                 }
             ]
         },

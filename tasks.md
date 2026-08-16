@@ -69,7 +69,14 @@
     - [ ] character struct
         - [ ] ...and loader
     - [ ] item struct
+        - [ ] importer
+        - [x] weapon
+        - [ ] generic item?
+        - [ ] armor
     - [ ] spell struct
+        - [ ] importer
+        - [ ] damage
+        - [ ] utility
 - [ ] build tui minimum viable product
     - [x] stat selector
         - [x] roller

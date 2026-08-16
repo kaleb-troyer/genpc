@@ -118,7 +118,7 @@ impl Roll {
 /// Example:
 /// ```
 /// let dref = DiceRef { ... };
-/// let roll = Roll::new(
+/// let roll = Roll::new(rust
 ///     dref.getspec(&MyCharacter)
 /// ).adv();
 /// ```

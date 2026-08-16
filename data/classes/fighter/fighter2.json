@@ -1,0 +1,488 @@
+{
+    "meta": {
+        "class": "class",
+        "order": "primary",
+        "group": null,
+        "id": "fighter",
+        "name": "Fighter",
+        "source": "srd",
+        "description": "<asdf>"
+    },
+    "hit_die": 10,
+    "primary_ability": {
+        "fixed": [],
+        "choose": { "count": 1, "options": ["STR", "DEX"] }
+    },
+    "saving_throws": ["STR", "CON"],
+    "caster_type": null,
+    "benefits": {
+        "M": {
+            "proficiencies": {
+                "weaps": {
+                    "fixed": ["martial"],
+                    "choose": { "count": 0, "options": [] }
+                },
+                "armor": {
+                    "fixed": ["light", "medium", "shields"],
+                    "choose": { "count": 0, "options": [] }
+                }
+            }
+        },
+        "0": {
+            "proficiencies": {
+                "skills": {
+                    "fixed": [],
+                    "choose": {
+                        "count": 2,
+                        "options": ["acrobatics", "animal_handling", "athletics", "history", "insight", "intimidation", "persuasion", "perception", "survival"]
+                    }
+                },
+                "weaps": {
+                    "fixed": ["simple", "martial"],
+                    "choose": { "count": 0, "options": [] }
+                },
+                "armor": {
+                    "fixed": ["light", "medium", "heavy", "shields"],
+                    "choose": { "count": 0, "options": [] }
+                }
+            }
+        },
+        "1": {
+            "features": [
+                {
+                    "id": "fighting_style",
+                    "name": "Fighting Style",
+                    "items": { "choose": { "count": 1, "options": "all.meta.order=fighting_style" } },
+                    "description": "..."
+                },
+                {
+                    "id": "second_wind",
+                    "name": "Second Wind",
+                    "usage": {
+                        "action": "B",
+                        "target": 1,
+                        "ranges": {
+                            "distance": {
+                                "min": 0, "mid": 0, "max": 0, "units": "feet"
+                            },
+                            "line_of_site": false
+                        },
+                        "damage": {
+                            "roll": { "count": 1, "sides": 10, "bonus": "self.class.fighter.level" },
+                            "kind": "healing"
+                        },
+                    },
+                    "charges": { "max": 2 },
+                    "effects": [
+                        {
+                            "target": "self.second_wind.charges.current",
+                            "operation": "add",
+                            "event": "short_rest",
+                            "value": 1
+                        },
+                        {
+                            "target": "self.second_wind.charges.current",
+                            "operation": "subtract",
+                            "event": "self.second_wind",
+                            "value": 1
+                        },
+                        {
+                            "target": "self.second_wind.charges.current",
+                            "operation": "set",
+                            "event": "long_rest",
+                            "value": "second_wind.charges.max"
+                        }
+                    ],
+                    "description": "..."
+                },
+                {
+                    "id": "weapon_mastery",
+                    "name": "Weapon Mastery",
+                    "items": { "choose": { "count": 3, "options": "all.meta.order=weapon" } },
+                    "effects": [
+                        {
+                            "target": "self.weapon_mastery.items.selection",
+                            "operation": "replace",
+                            "event": "long_rest",
+                            "value": 1
+                        }
+                    ],
+                    "description": "..."
+                }
+            ]
+        },
+        "2": {
+            "features": [
+                {
+                    "id": "action_surge",
+                    "name": "Action Surge",
+                    "usage": { "action": "F" },
+                    "charges": { "max": 1 },
+                    "effects": [
+                        {
+                            "target": "self.action_surge.charges.current",
+                            "operation": "subtract",
+                            "event": "self.action_surge",
+                            "value": 1
+                        },
+                        {
+                            "target": "self.action_surge.charges.current",
+                            "operation": "set",
+                            "event": "short_rest",
+                            "value": "self.chargets.max"
+                        }
+                    ],
+                    "description": "..."
+                },
+                {
+                    "id": "tactical_mind",
+                    "name": "Tactical Mind",
+                    "effects": [
+                        {
+                            "target": "self",
+                            "operation": "ask",
+                            "event": "self.ability_check.fail *OR SOMETHING*",
+                            "value": "self.tactical_mind"
+                        },
+                        {
+                            "target": "self.roll *OR SOMETHING LIKE THIS*",
+                            "operation": "add",
+                            "event": "self.tactical_mind",
+                            "value": {"count": 1, "sides": 10, "bonus": "class.fighter.level"}
+                        },
+                        {
+                            "target": "self.second_wind.charges.current",
+                            "operation": "subtract",
+                            "event": "self.tactical_mind && self.ability_check.pass",
+                            "value": 1
+                        }
+                    ],
+                    "description": "..."
+                }
+            ]
+        },
+        "3": {
+            "features": [
+                {
+                    "id": "fighter_subclass",
+                    "name": "Fighter Subclass",
+                    "items": {
+                        "choose": { "count": 1, "options": "all.meta.group=fighter" }
+                    },
+                    "description": "..."
+                }
+            ]
+        },
+        "4": {
+            "features": [
+                {
+                    "id": "feat",
+                    "name": "Ability Score Improvement",
+                    "items": {
+                        "choose": { "count": 1, "options": "all.meta.class=feat && all.meta.order=general" }
+                    },
+                    "description": "..."
+                }
+            ]
+        },
+        "5": {
+            "features": [
+                {
+                    "id": "extra_attack",
+                    "name": "Extra Attack",
+                    "effects": [
+                        {
+                            "target": "self.attacks.max",
+                            "operation": "set",
+                            "event": "ON_GAIN",
+                            "value": 2
+                        }
+                    ],
+                    "description": "..."
+                },
+                {
+                    "id": "tactical_shift",
+                    "name": "Tactical Shift",
+                    "effects": [
+                        {
+                            "target": "self.movement.disengaged",
+                            "operation": "add",
+                            "event": "self.second_wind",
+                            "value": "self.movement.speed / 2"
+                        },
+                        {
+                            "target": "self.movement.remainder",
+                            "operation": "add",
+                            "event": "self.second_wind",
+                            "value": "self.movement.speed / 2"
+                        }
+                    ],
+                    "description": "..."
+                }
+            ]
+        },
+        "6": {
+            "features": [
+                {
+                    "id": "feat",
+                    "name": "Ability Score Improvement",
+                    "items": {
+                        "choose": { "count": 1, "options": "all.meta.class=feat && all.meta.order=general" }
+                    },
+                    "description": "..."
+                }
+            ]
+        },
+        "7": {
+            "features": [
+                {
+                    "id": "subclass_feature",
+                    "name": "Subclass Feature",
+                    "description": "..."
+                }
+            ]
+        },
+        "8": {
+            "features": [
+                {
+                    "id": "feat",
+                    "name": "Ability Score Improvement",
+                    "items": {
+                        "choose": { "count": 1, "options": "all.meta.class=feat && all.meta.order=general" }
+                    },
+                    "description": "..."
+                }
+            ]
+        },
+        "9": {
+            "features": [
+                {
+                    "id": "indomitable",
+                    "name": "Indomitable",
+                    "items": null,
+                    "usage": null,
+                    "charges": { "max": 1 },
+                    "effects": [
+                        {
+                            "target": "self",
+                            "operation": "ask",
+                            "event": "self.save.fail *OR self.roll IF (self.roll.type=save && self.roll.status=fail)*",
+                            "value": "self.indomitable"
+                        },
+                        {
+                            "target": "self.save.throw *OR self.roll?*",
+                            "operation": "set",
+                            "event": "self.indomitable",
+                            "value": {
+                                "count": 1,
+                                "sides": 20,
+                                "bonus": [
+                                    "self.attributes[self.save.attr *OR self.roll.attr*]", "self.levels.fighter"
+                                ]
+                            }
+                        },
+                        {
+                            "target": "self.indomitable.charges.current",
+                            "operation": "subtract",
+                            "event": "self.indomitable",
+                            "value": 1
+                        },
+                        {
+                            "target": "self.indomitable.charges.current",
+                            "operation": "set",
+                            "event": "long_rest",
+                            "value": "self.indomitable.charges.max"
+                        }
+                    ],
+                    "description": "..."
+                },
+                {
+                    "id": "tactical_master",
+                    "name": "Tactical Master",
+                    "effects": [
+                        {
+                            "target": "equipped.mastery",
+                            "operation": "also",
+                            "event": "equip IF(equipped.meta.id IN self.weapon_mastery.items.selection)",
+                            "value": ["any.meta.id=sap", "any.meta.id=push", "any.meta.id=slow"]
+                        }
+                    ],
+                    "description": "..."
+                }
+            ]
+        },
+        "10": {
+            "features": [
+                {
+                    "id": "subclass_feature",
+                    "name": "Subclass Feature",
+                    "description": "..."
+                }
+            ]
+        },
+        "11": {
+            "features": [
+                {
+                    "id": "two_extra_attacks",
+                    "name": "Two Extra Attacks",
+                    "effects": [
+                        {
+                            "target": "self.attacks.max",
+                            "operation": "set *PROMBLEM -> THIS OVERWRITES A HIGHER NUMBER POTENTIALLY, so do? set IF (self.attacks.max < 3)*",
+                            "event": "ON_GAIN",
+                            "value": 3
+                        }
+                    ],
+                    "description": "..."
+                },
+            ]
+        },
+        "12": {
+            "features": [
+                {
+                    "id": "feat",
+                    "name": "Ability Score Improvement",
+                    "items": {
+                        "choose": { "count": 1, "options": "all.meta.class=feat && all.meta.order=general" }
+                    },
+                    "description": "..."
+                }
+            ]
+        },
+        "13": {
+            "features": [
+                {
+                    "id": "indomitable",
+                    "name": "Indomitable",
+                    "charges": { "max": 2 },
+                    "description": "..."
+                },
+                {
+                    "id": "studied_attacks",
+                    "name": "Studied Attacks",
+                    "effects": [
+                        {
+                            "target": "self.targets.advantage",
+                            "operation": "add",
+                            "event": "self.roll IF (self.roll.type=attack && self.roll.status=fail)",
+                            "value": "target"
+                        },
+                        {
+                            "target": "self.targets.advantage",
+                            "operation": "subtract",
+                            "event": "self.roll IF (self.roll.target IN self.targets.advantage) *THIS IS FLAWED*",
+                            "value": "target"
+                        },
+                        {
+                            *NEED A TIMER AS WELL...*
+                        }
+                    ]
+                }
+            ]
+        },
+        "14": {
+            "features": [
+                {
+                    "id": "feat",
+                    "name": "Ability Score Improvement",
+                    "items": {
+                        "choose": { "count": 1, "options": "all.meta.class=feat && all.meta.order=general" }
+                    },
+                    "description": "..."
+                }
+            ]
+        },
+        "15": {
+            "features": [
+                {
+                    "id": "subclass_feature",
+                    "name": "Subclass Feature",
+                    "description": "..."
+                }
+            ]
+        },
+        "16": {
+            "features": [
+                {
+                    "id": "feat",
+                    "name": "Ability Score Improvement",
+                    "items": {
+                        "choose": { "count": 1, "options": "all.meta.class=feat && all.meta.order=general" }
+                    },
+                    "description": "..."
+                }
+            ]
+        },
+        "17": {
+            "features": [
+                {
+                    "id": "action_surge",
+                    "name": "Action Surge",
+                    "usage": { "action": "F" },
+                    "charges": { "max": 2 },
+                    "description": "..."
+                },
+                {
+                    "id": "indomitable",
+                    "name": "Indomitable",
+                    "charges": { "max": 3 },
+                    "description": "..."
+                },
+            ]
+        },
+        "18": {
+            "features": [
+                {
+                    "id": "subclass_feature",
+                    "name": "Subclass Feature",
+                    "description": "..."
+                }
+            ]
+        },
+        "19": {
+            "features": [
+                {
+                    "id": "epic_boon",
+                    "name": "Epic Boon",
+                    "items": {
+                        "choose": { "count": 1, "options": "all.meta.class=feat && (all.meta.order=epic_boon) || all.meta.order=feat)" }
+                    },
+                    "description": "..."
+                }
+            ]
+        },
+        "20": {
+            "features": [
+                {
+                    "id": "three_extra_attacks",
+                    "name": "Three Extra Attacks",
+                    "effects": [
+                        {
+                            "target": "self.attacks.max",
+                            "operation": "set IF (self.attacks.max < 4)*",
+                            "event": "ON_GAIN",
+                            "value": 4
+                        }
+                    ],
+                    "description": "..."
+                },
+            ]
+        }
+    },
+    "equipment": { "fixed": [], "choose": { "count": 1, "options": [
+                {
+                    "items": [["chain_mail", 1], ["greatsword", 1], ["flail", 1], ["javelin", 8], ["dungeoneers_pack", 1]],
+                    "currency": { "pp": 0, "gp": 4, "sp": 0, "cp": 0 }
+                },
+                {
+                    "items": [["studded_leather_armor", 1], ["scimitar", 1], ["shortsword", 1], ["longbow", 1], ["arrow", 20], ["quiver", 1], ["dungeoneers_pack", 1]],
+                    "currency": { "pp": 0, "gp": 11, "sp": 0, "cp": 0 }
+                },
+                {
+                    "items": [],
+                    "currency": { "pp": 0, "gp": 155, "sp": 0, "cp": 0 }
+                }
+            ]
+        }
+    }
+}

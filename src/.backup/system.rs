@@ -8,6 +8,137 @@ use std::fmt;
 use serde::{Deserialize, Serialize};
 
 // ========================================
+// Stat Data, Members, and Methods
+// ========================================
+
+/// Enum representing all system ability scores
+#[repr(usize)]
+#[derive(Debug, Clone, Copy)]
+pub enum Stat {
+    STR = 0,
+    DEX = 1,
+    CON = 2,
+    INT = 3,
+    WIS = 4,
+    CHA = 5,
+}
+
+impl Stat {
+    pub const COUNT: usize = 6;
+
+    pub const ALL: [Stat; Self::COUNT] = [
+        Stat::STR,
+        Stat::DEX,
+        Stat::CON,
+        Stat::INT,
+        Stat::WIS,
+        Stat::CHA,
+    ];
+
+    /// Returns the enumerated value of the stat, e.g. Stat::WIS.val() = 4
+    pub fn val(self) -> usize {
+        self as usize
+    }
+
+    /// Returns a stat, given it's corresponding string
+    pub fn from_str(stat: &str) -> Option<Stat> {
+        match stat {
+            "STR" => Some(Stat::STR),
+            "DEX" => Some(Stat::DEX),
+            "CON" => Some(Stat::CON),
+            "INT" => Some(Stat::INT),
+            "WIS" => Some(Stat::WIS),
+            "CHA" => Some(Stat::CHA),
+            _ => None,
+        }
+    }
+}
+
+impl fmt::Display for Stat {
+
+    /// Returns the string value of the Stat object
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match self {
+            Stat::STR => "STR",
+            Stat::DEX => "DEX",
+            Stat::CON => "CON",
+            Stat::INT => "INT",
+            Stat::WIS => "WIS",
+            Stat::CHA => "CHA",
+        };
+        write!(f, "{}", name)
+    }
+}
+
+// ========================================
+// Ability Score Data, Members, and Methods
+// ========================================
+
+/// Container for ability scores, stored as an array and indexed by Stat
+#[derive(Debug, Clone, Copy)]
+pub struct AbilityScores {
+    values: [u8; Stat::COUNT],
+}
+
+impl AbilityScores {
+    /// Default constructor with base as fill value
+    pub fn new(base: u8) -> Self {
+        Self { values: [base; Stat::COUNT] }
+    }
+
+    /// Constructor for building from a user-defined array
+    pub fn from_array(values: [u8; Stat::COUNT]) -> Self {
+        Self { values: values }
+    }
+
+    /// Constructor for cleanly defining only some stats via the diffs array
+    pub fn from_diffs(diffs: &[(Stat, u8)]) -> Self {
+        let mut ascore = AbilityScores::new(0);
+        for &(stat, val) in diffs {
+            ascore[stat] = val;
+        }
+        ascore
+    }
+
+    /// Return D&D ability score modifier for given stat
+    pub fn modifier(&self, stat: Stat) -> i8 {
+        (self[stat] as i8 - 10).div_euclid(2)
+    }
+}
+
+impl Index<Stat> for AbilityScores {
+    type Output = u8;
+
+    fn index(&self, stat: Stat) -> &Self::Output {
+        &self.values[stat as usize]
+    }
+}
+
+impl IndexMut<Stat> for AbilityScores {
+    fn index_mut(&mut self, stat: Stat) -> &mut Self::Output {
+        &mut self.values[stat as usize]
+    }
+}
+
+impl AddAssign for AbilityScores {
+    fn add_assign(&mut self, rhs: AbilityScores) {
+        for stat in Stat::ALL {
+            self[stat] += rhs[stat];
+        }
+    }
+}
+
+impl Add for AbilityScores {
+    type Output = AbilityScores;
+
+    fn add(self, rhs: AbilityScores) -> AbilityScores {
+        let mut result = self;
+        result += rhs;
+        result
+    }
+}
+
+// ========================================
 // D&D 5.5e Currency
 // ========================================
 // This section reveals the Coin enum, CHAIN vector, and Currency struct. The
