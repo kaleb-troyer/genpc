@@ -8,6 +8,11 @@ use serde::{Deserialize, Serialize};
 use crate::character::{Character};
 use crate::common::{DynMod};
 
+// ========================================
+// Dice Specification and Roll Object
+// ========================================
+// asdf
+
 /// Represents a roll specification (number and sides of dice).
 ///
 /// Example:
@@ -111,6 +116,11 @@ impl Roll {
         }
     }
 }
+
+// ========================================
+// Dice Reference
+// ========================================
+// asdf
 
 /// A dice specification that may reference a character attribute for its bonus,
 /// resolved into a [`DiceSpec`] at runtime.
