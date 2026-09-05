@@ -154,6 +154,17 @@ impl Add for Currency {
 // D&D 5.5e Rules and Truisms
 // ========================================
 
+/// Rarity of items and goods
+pub enum Rarity {
+    None,
+    Common,
+    Uncommon,
+    Rare,
+    VeryRare,
+    Legendary,
+    Mythic,
+}
+
 /// Experience table corresponding to levels 1-20
 pub const LEVEL_EXP: [u32; 20] = [
     0,      // Level 1
