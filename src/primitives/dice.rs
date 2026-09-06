@@ -6,7 +6,7 @@ use rand::prelude::*;
 use serde::{Deserialize, Serialize};
 
 use crate::character::{Character};
-use crate::common::{DynMod};
+use crate::dynmod::{DynMod, DynVec};
 
 // ========================================
 // Dice Specification and Roll Object
@@ -136,7 +136,7 @@ impl Roll {
 pub struct DiceRef {
     pub count: u8,
     pub sides: u8,
-    pub bonus: DynMod, // See load.rs
+    pub bonus: Option<DynVec>, // See load.rs
 }
 
 // DiceRef methods

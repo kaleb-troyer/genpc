@@ -9,16 +9,17 @@
 
 /// Generic selection pool object
 #[derive(Debug, Deserialize, Serialize, Default, Clone)]
-pub struct SelectionPool {
-    fixed: Option<Vec<String>>,
-    choose: Choice,
+pub struct SelectionPool<T> {
+    selection: Option<Vec<T>>,
+    fixed: Option<Vec<T>>,
+    choose: Choice<T>,
 }
 
 /// Handles the selection of generic features
 #[derive(Debug, Deserialize, Serialize, Default, Clone)]
-pub struct Choice {
+pub struct Choice<T> {
     count: u8,
-    options: ChoiceTypes,
+    options: ChoiceTypes<T>,
 }
 
 impl Choice {
@@ -37,35 +38,44 @@ impl Choice {
     }
 }
 
+/// 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(untagged)]
-pub enum ChoiceTypes {
-    Single(String),
-    Multiple(Vec<String>)
+pub enum ChoiceTypes<T> {
+    Options(Vec<T>),
+    ListRef(String),
 }
 
-impl ChoiceTypes {
+// /// 
+// #[derive(Debug, Deserialize, Serialize, Clone)]
+// #[serde(untagged)]
+// pub enum ChoiceTypes {
+//     Single(String),
+//     Multiple(Vec<String>)
+// }
 
-    pub fn len(&self) -> usize {
-        match self {
-            ChoiceTypes::Single(_) => 1,
-            ChoiceTypes::Multiple(v) => v.len(),
-        }
-    }
-
-    pub fn remove(&mut self, i: usize) -> String {
-        match self {
-            ChoiceTypes::Single(s) => s.clone(),
-            ChoiceTypes::Multiple(v) => v.remove(i),
-        }
-    }
-}
-
-impl Default for ChoiceTypes {
-    fn default() -> Self {
-        ChoiceTypes::Multiple(Vec::new())
-    }
-}
+// impl ChoiceTypes {
+//
+//     pub fn len(&self) -> usize {
+//         match self {
+//             ChoiceTypes::Single(_) => 1,
+//             ChoiceTypes::Multiple(v) => v.len(),
+//         }
+//     }
+//
+//     pub fn remove(&mut self, i: usize) -> String {
+//         match self {
+//             ChoiceTypes::Single(s) => s.clone(),
+//             ChoiceTypes::Multiple(v) => v.remove(i),
+//         }
+//     }
+// }
+//
+// impl Default for ChoiceTypes {
+//     fn default() -> Self {
+//         ChoiceTypes::Multiple(Vec::new())
+//     }
+// }
 
 /// Possible errors incurred during feature selection
 #[derive(Debug)]

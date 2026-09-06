@@ -52,6 +52,7 @@ pub struct Currency {
 }
 
 impl Currency {
+
     /// Calculates the total value of the purse
     pub fn total(&self) -> u32 {
         let mut result = self[Coin::PP];

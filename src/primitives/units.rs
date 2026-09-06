@@ -25,7 +25,7 @@ pub struct Duration {
 }
 
 // ========================================
-// Time and Duration
+// Length, Distance, and Range
 // ========================================
 // 
 
@@ -44,5 +44,34 @@ pub struct Distance {
     max: u16,
     units: Option<Length>,
 }
+
+///
+#[derive(Debug, Deserialize, Serialize)]
+pub struct Range {
+    distance: Distance,
+    line_of_site: bool,
+    ammunition: Option<String>
+}
+
+// ========================================
+// Shape and Template
+// ========================================
+// 
+
+///
+#[derive(Debug, Deserialize, Serialize)]
+pub enum Shape {
+    Sphere, Square, Cone, Line
+}
+
+///
+#[derive(Debug, Deserialize, Serialize)]
+pub struct Template {
+    size: Distance,
+    shape: Shape,
+}
+
+
+
 
 // EOF

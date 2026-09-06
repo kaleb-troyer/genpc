@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// Enum representing all system ability scores
 #[repr(usize)]
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Stat {
     STR = 0,
     DEX = 1,
@@ -106,6 +106,7 @@ impl AbilityScores {
     }
 }
 
+// indexing and arithmetic operations for ability scores
 impl Index<Stat> for AbilityScores {
     type Output = u8;
 
@@ -139,45 +140,106 @@ impl Add for AbilityScores {
 }
 
 // ========================================
-// Ability Score Increase Implementation
+// Abilities Implementation
 // ========================================
-// Describes the object and set of parameters that determine how ability score
-// modifiers are selected during character creation, level-up, or multiclassing.
-// Not to be confused with the Stat object, imported from system.
+// 
 
-/// Ability score increase from character creation or level-up
-#[derive(Debug, Deserialize, Serialize)]
-pub struct ASI {
-    value: u8,      // point value applied to ability score, not a modifier (usuall 1)
-    count: u8,      // number of points to allocate (usually 3)
-    maxper: u8,     // maximum number of points that may be allocated per stat
-    stats: Vec<String>, // ability scores to which points may be allocated
+/// 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Skill {
+    Athletics,
+    Acrobatics,
+    Arcana,
+    SleightOfHand,
+    Stealth,
+    AnimalHandling,
+    History,
+    Investigation,
+    Nature,
+    Religion,
+    Insight,
+    Medicine,
+    Deception,
+    Perception,
+    Survival,
+    Intimidation,
+    Performance,
+    Persuasion,
 }
 
-/// Ability score prerequisites for feature selection
-#[derive(Debug, Deserialize, Serialize, Default)]
-pub struct Prerequisites {
-    STR: Option<u8>,
-    DEX: Option<u8>,
-    CON: Option<u8>,
-    INT: Option<u8>,
-    WIS: Option<u8>,
-    CHA: Option<u8>,
-}
+impl Skill {
 
-impl Index<Stat> for Prerequisites {
-    type Output = Option<u8>;
+    /// Returns the Stat associated with the skill
+    pub fn stat(self) -> Stat {
+        use Skill::*;
+        use Stat::*;
 
-    fn index(&self, stat: Stat) -> &Self::Output {
-        match stat {
-            Stat::STR => &self.STR,
-            Stat::DEX => &self.DEX,
-            Stat::CON => &self.CON,
-            Stat::INT => &self.INT,
-            Stat::WIS => &self.WIS,
-            Stat::CHA => &self.CHA,
+        match self {
+            Athletics       => STR,
+            Acrobatics      => DEX,
+            Arcana          => INT,
+            SleightOfHand   => DEX,
+            Stealth         => DEX,
+            AnimalHandling  => WIS,
+            History         => INT,
+            Investigation   => INT,
+            Nature          => INT,
+            Religion        => INT,
+            Insight         => WIS,
+            Medicine        => WIS,
+            Deception       => CHA,
+            Perception      => WIS,
+            Survival        => WIS,
+            Intimidation    => CHA,
+            Performance     => CHA,
+            Persuasion      => CHA,
         }
     }
+
 }
+
+
+
+// // ========================================
+// // Ability Score Increase Implementation
+// // ========================================
+// // Describes the object and set of parameters that determine how ability score
+// // modifiers are selected during character creation, level-up, or multiclassing.
+// // Not to be confused with the Stat object, imported from system.
+//
+// /// Ability score increase from character creation or level-up
+// #[derive(Debug, Deserialize, Serialize)]
+// pub struct ASI {
+//     value: u8,      // point value applied to ability score, not a modifier (usuall 1)
+//     count: u8,      // number of points to allocate (usually 3)
+//     maxper: u8,     // maximum number of points that may be allocated per stat
+//     stats: Vec<String>, // ability scores to which points may be allocated
+// }
+//
+// /// Ability score prerequisites for feature selection
+// #[derive(Debug, Deserialize, Serialize, Default)]
+// pub struct Prerequisites {
+//     STR: Option<u8>,
+//     DEX: Option<u8>,
+//     CON: Option<u8>,
+//     INT: Option<u8>,
+//     WIS: Option<u8>,
+//     CHA: Option<u8>,
+// }
+//
+// impl Index<Stat> for Prerequisites {
+//     type Output = Option<u8>;
+//
+//     fn index(&self, stat: Stat) -> &Self::Output {
+//         match stat {
+//             Stat::STR => &self.STR,
+//             Stat::DEX => &self.DEX,
+//             Stat::CON => &self.CON,
+//             Stat::INT => &self.INT,
+//             Stat::WIS => &self.WIS,
+//             Stat::CHA => &self.CHA,
+//         }
+//     }
+// }
 
 // EOF
