@@ -1,0 +1,170 @@
+// <comment>
+// 2026-06-21
+// Kaleb Troyer
+
+use std::ops::{Add, AddAssign, Index, IndexMut};
+use std::fmt;
+
+use serde::{Deserialize, Serialize};
+
+// ========================================
+// D&D 5.5e Currency
+// ========================================
+// This section reveals the Coin enum, CHAIN vector, and Currency struct. The
+// Coin enum holds the denominations of coin, while the CHAIN vector tracks the
+// conversion rate of each coin to the next lowest denomination. The Currency
+// struct serves as a container for anything that has a monetary value, such as
+// a purse, loot, or an item for sale, and comes with implementations for
+// calculating the total value, attempting a purchase, indexing by Coin, or
+// adding two containers together.
+// ```
+// let mut purse = Currency { pp: 0, gp: 0, sp: 20, cp: 12 };
+// purse[Coin::GP] += 3;
+//
+// let rope = Currency { pp: 0, gp: 0, sp: 3, cp: 0 };
+// purse.try_sub(rope);
+// ```
+
+#[derive(Debug, Clone, Copy)]
+pub enum Coin { CP, SP, GP, PP }
+
+/// Possible errors incurred during currency operations
+#[derive(Debug)]
+pub enum CurrencyError {
+    InsufficientFunds,
+}
+
+/// Conversion rates to the next denomination down
+const CHAIN: [(Coin, u32, u32); 4] = [
+    (Coin::PP, 10, 1000),
+    (Coin::GP, 10, 100),
+    (Coin::SP, 10, 10),
+    (Coin::CP,  1, 1)
+];
+
+/// Container for d&d currency valuations
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+pub struct Currency {
+    pub pp: u32,
+    pub gp: u32,
+    pub sp: u32,
+    pub cp: u32
+}
+
+impl Currency {
+
+    /// Calculates the total value of the purse
+    pub fn total(&self) -> u32 {
+        let mut result = self[Coin::PP];
+        for (coin, rate, _) in CHAIN.iter().skip(1) {
+            result = result * rate + self[*coin];
+        }
+        return result;
+    }
+
+    /// Sets the total value of the purse to zero
+    pub fn empty(&mut self) {
+        for i in 0..CHAIN.len() {
+            let (coin, _, _) = CHAIN[i];
+            self[coin] = 0;
+        }
+    }
+
+    /// Try to substract a cost from a purse, returning an error if the total
+    /// value of the purse isn't great enough
+    pub fn try_sub(&mut self, rhs: Currency) -> Result<(), CurrencyError> {
+
+        // copies and shadows rhs so caller value remains untouched
+        let mut rhs = rhs;
+        if self.total() < rhs.total() {
+            return Err(CurrencyError::InsufficientFunds);
+        }
+
+        // must rebase rhs so that the next for-loop functions as intended
+        let mut cost: u32 = rhs.total();
+        for i in 0..CHAIN.len() {
+            let (coin, _, base) = CHAIN[i];
+
+            rhs[coin] = cost / base;
+            cost = cost % base;
+        }
+
+        // looping for most to least valuable coin to perform the subtraction
+        for i in 0..CHAIN.len() - 1 {
+            let (coin, rate, base) = CHAIN[i];
+            let (next, _, _) = CHAIN[i+1];
+
+            if self[coin] >= rhs[coin] {
+                self[coin] -= rhs[coin];
+            } else {
+                let deficit = rhs[coin] - self[coin];
+                rhs[next] += deficit * rate;
+                self[coin] = 0;
+                rhs[coin] = 0;
+            }
+        }
+
+        self.cp -= rhs.cp;
+        return Ok(());
+    }
+}
+
+impl Index<Coin> for Currency {
+    type Output = u32;
+    fn index(&self, coin: Coin) -> &u32 {
+        match coin {
+            Coin::PP => &self.pp,
+            Coin::GP => &self.gp,
+            Coin::SP => &self.sp,
+            Coin::CP => &self.cp,
+        }
+    }
+}
+
+impl IndexMut<Coin> for Currency {
+    fn index_mut(&mut self, coin: Coin) -> &mut u32 {
+        match coin {
+            Coin::PP => &mut self.pp,
+            Coin::GP => &mut self.gp,
+            Coin::SP => &mut self.sp,
+            Coin::CP => &mut self.cp,
+        }
+    }
+}
+
+impl AddAssign for Currency {
+    fn add_assign(&mut self, rhs: Currency) {
+        self.pp += rhs.pp;
+        self.gp += rhs.gp;
+        self.sp += rhs.sp;
+        self.cp += rhs.cp;
+    }
+}
+
+impl Add for Currency {
+    type Output = Currency;
+
+    fn add(self, rhs: Currency) -> Currency {
+        let mut result = self;
+        result += rhs;
+        result
+    }
+}
+
+// ========================================
+// D&D 5.5e Currency
+// ========================================
+// 
+
+/// Rarity of items and goods
+pub enum Rarity {
+    None,
+    Common,
+    Uncommon,
+    Rare,
+    VeryRare,
+    Legendary,
+    Mythic,
+}
+
+// EOF

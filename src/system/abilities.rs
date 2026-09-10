@@ -7,6 +7,8 @@ use std::fmt;
 
 use serde::{Deserialize, Serialize};
 
+use crate::reference::Reference;
+
 // ========================================
 // Stat Data, Members, and Methods
 // ========================================
@@ -140,7 +142,19 @@ impl Add for AbilityScores {
 }
 
 // ========================================
-// Abilities Implementation
+// Prerequisites Implementation
+// ========================================
+// 
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct Prerequisites {
+    attrs: Option<AbilityScores>,
+    level: Option<u8>,
+    features: Option<Vec<Reference>>,
+}
+
+// ========================================
+// Skills Implementation
 // ========================================
 // 
 
@@ -195,10 +209,7 @@ impl Skill {
             Persuasion      => CHA,
         }
     }
-
 }
-
-
 
 // // ========================================
 // // Ability Score Increase Implementation
