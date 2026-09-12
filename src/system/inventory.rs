@@ -1,26 +1,30 @@
 // <comment>
-// 2026-09-12
+// 2026-08-16
 // Kaleb Troyer
 
+use crate::value::Currency;
 use crate::reference::Reference;
 
 use serde::{Deserialize, Serialize};
 
 
 // ========================================
-// Reference Implementation
+// Inventory and ItemStack
 // ========================================
-// 
+//
 
+/// 
 #[derive(Debug, Deserialize, Serialize)]
-pub struct Meta {
-    class: String,
-    order: Option<String>,
-    group: Option<String>,
+pub struct Inventory {
+    items: Option<Vec<ItemStack>>,
+    purse: Option<Currency>,
+}
+
+/// 
+#[derive(Debug, Deserialize, Serialize)]
+pub struct ItemStack {
     id: Reference,
-    name: String,
-    source: String,
-    description: String,
+    qty: u32,
 }
 
 

@@ -4,10 +4,10 @@
 
 use std::ops::{Add, AddAssign, Index, IndexMut};
 use std::fmt;
-
 use serde::{Deserialize, Serialize};
 
 use crate::reference::Reference;
+
 
 // ========================================
 // Stat Data, Members, and Methods

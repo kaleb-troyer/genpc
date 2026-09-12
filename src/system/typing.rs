@@ -2,9 +2,8 @@
 // 2026-09-04
 // Kaleb Troyer
 
-
-
 use serde::{Deserialize, Serialize};
+
 
 // ========================================
 // 
@@ -42,13 +41,13 @@ pub enum CasterType {
 /// 
 #[derive(Debug, Deserialize, Serialize)]
 pub enum ArmorType {
-    Light, Medium, Heavy, Shields
+    Light, Medium, Heavy, Shields, Single(Reference)
 }
 
 /// 
 #[derive(Debug, Deserialize, Serialize)]
 pub enum WeaponType {
-    Simple, Martial
+    Simple, Martial, Single(Reference)
 }
 
 /// 
@@ -76,7 +75,11 @@ pub enum School {
     Necromancy,
 }
 
-
+/// 
+#[derive(Debug, Deserialize, Serialize)]
+pub enum Size {
+    Tiny, Small, Medium, Large, Huge, Gargantuan
+}
 
 
 // EOF

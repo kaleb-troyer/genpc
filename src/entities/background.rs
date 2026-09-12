@@ -6,22 +6,26 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::system::{Stat::*, AbilityScores, Coin::*, Currency};
-use crate::common::*;
+use crate::meta::Meta;
+use crate::benefits::Benefits;
+use crate::inventory::Inventory;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Background {
-    pub id: String,
-    pub name: String,
-    pub source: String,
-    pub benefits: HashMap<u8, Benefits>,
-    pub equipment: Equipment,
-    pub description: String,
+    meta: Meta,
+    benefits: MashMap<u8, Benefits>,
+    equipment: Optioin<Vec<Inventory>>,
 }
 
 
-
-
-
+// #[derive(Debug, Deserialize, Serialize)]
+// pub struct Background {
+//     pub id: String,
+//     pub name: String,
+//     pub source: String,
+//     pub benefits: HashMap<u8, Benefits>,
+//     pub equipment: Equipment,
+//     pub description: String,
+// }
 
 // EOF

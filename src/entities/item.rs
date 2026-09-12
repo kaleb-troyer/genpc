@@ -2,14 +2,14 @@
 // 2026-09-09
 // Kaleb Troyer
 
-
 use crate::value::{Rarity, Coin, Currency};
 use crate::benefits::Benefits;
 use crate::meta::Meta;
-use crate::effect:Effect;
+use crate::effect::Effect;
 use crate::reference::Reference;
 use crate::function::Function;
 use crate::abilities::Preprequisites;
+
 
 // ========================================
 // Item Struct and Implementation

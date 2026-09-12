@@ -2,6 +2,11 @@
 // 2026-09-01
 // Kaleb Troyer
 
+use crate::reference::Reference;
+
+use serde::{Deserialize, Serialize};
+
+
 // ========================================
 // Time and Duration
 // ========================================
@@ -54,7 +59,7 @@ pub struct Range {
 }
 
 // ========================================
-// Shape and Template
+// Shape, Template, and Summon
 // ========================================
 // 
 
@@ -71,6 +76,12 @@ pub struct Template {
     shape: Shape,
 }
 
+///
+#[derive(Debug, Deserialize, Serialize)]
+pub enum Summon {
+    AOE(Template),
+    Creature(Reference)
+}
 
 
 

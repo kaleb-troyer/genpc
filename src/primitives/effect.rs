@@ -1,6 +1,11 @@
 // <comment>
-// 2026-08-16
+// 2026-09-12
 // Kaleb Troyer
+
+use crate::dynmod::DynVec;
+
+use serde::{Deserialize, Serialize};
+
 
 // ========================================
 // Effects
@@ -15,7 +20,7 @@ pub struct Effect {
     target: String,
     operation: String,
     event: String,
-    value: DynMod,
+    value: DynVec,
 }
 
 impl Effect {
