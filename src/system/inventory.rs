@@ -2,10 +2,10 @@
 // 2026-08-16
 // Kaleb Troyer
 
+use serde::{Deserialize, Serialize};
+
 use crate::value::Currency;
 use crate::reference::Reference;
-
-use serde::{Deserialize, Serialize};
 
 
 // ========================================

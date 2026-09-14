@@ -1,11 +1,16 @@
-// <comment>
-// 2026-08-16
+// Choices are the fundamental structures that define what and how many features
+// are conferred to a character when new features are gained. Choices are
+// presented via a selection pool, which, despite it's name, offers both fixed
+// features automatically given the character and a set of options the player
+// can choose from. The selection pool additionally stores what options were
+// chosen, which is useful only after the struct has been cloned.
+// 2026-09-13
 // Kaleb Troyer
 
 // ========================================
 // Selection Pool and Choice Implementation
 // ========================================
-// asdf
+// 
 
 /// Generic selection pool object
 #[derive(Debug, Deserialize, Serialize, Default, Clone)]
@@ -45,37 +50,6 @@ pub enum ChoiceTypes<T> {
     Options(Vec<T>),
     ListRef(String),
 }
-
-// /// 
-// #[derive(Debug, Deserialize, Serialize, Clone)]
-// #[serde(untagged)]
-// pub enum ChoiceTypes {
-//     Single(String),
-//     Multiple(Vec<String>)
-// }
-
-// impl ChoiceTypes {
-//
-//     pub fn len(&self) -> usize {
-//         match self {
-//             ChoiceTypes::Single(_) => 1,
-//             ChoiceTypes::Multiple(v) => v.len(),
-//         }
-//     }
-//
-//     pub fn remove(&mut self, i: usize) -> String {
-//         match self {
-//             ChoiceTypes::Single(s) => s.clone(),
-//             ChoiceTypes::Multiple(v) => v.remove(i),
-//         }
-//     }
-// }
-//
-// impl Default for ChoiceTypes {
-//     fn default() -> Self {
-//         ChoiceTypes::Multiple(Vec::new())
-//     }
-// }
 
 /// Possible errors incurred during feature selection
 #[derive(Debug)]

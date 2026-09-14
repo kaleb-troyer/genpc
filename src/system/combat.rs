@@ -2,14 +2,12 @@
 // 2026-09-04
 // Kaleb Troyer
 
+use serde::{Deserialize, Serialize};
 
 use crate::dynmod::{DynVec}
 use crate::abilities::{Stat}
 use crate::units::{Duration}
 use crate::typing::{DamageType}
-
-
-use serde::{Deserialize, Serialize};
 
 
 // ========================================

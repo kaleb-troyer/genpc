@@ -2,9 +2,9 @@
 // 2026-09-01
 // Kaleb Troyer
 
-use crate::reference::Reference;
-
 use serde::{Deserialize, Serialize};
+
+use crate::reference::Reference;
 
 
 // ========================================

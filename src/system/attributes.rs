@@ -2,13 +2,13 @@
 // 2026-09-12
 // Kaleb Troyer
 
+use serde::{Deserialize, Serialize};
+
 use crate::reference::Reference;
 use crate::dice::DiceRef;
 use crate::choice::SelectionPool;
 use crate::dynmod::DynMod;
 use crate::units::Distance;
-
-use serde::{Deserialize, Serialize};
 
 
 // ========================================
@@ -44,7 +44,7 @@ pub struct Charges {
 
 /// 
 #[derive(Debug, Deserialize, Serialize)]
-pub struct Feature {
+pub struct Proficiencies {
     skills: Option<SelectionPool<Skill>>,
     tools: Option<SelectionPool<Reference>>,
     langs: Option<SelectionPool<Reference>>,

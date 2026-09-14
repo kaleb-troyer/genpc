@@ -2,9 +2,9 @@
 // 2026-09-12
 // Kaleb Troyer
 
-use crate::dynmod::DynVec;
-
 use serde::{Deserialize, Serialize};
+
+use crate::dynmod::DynVec;
 
 
 // ========================================

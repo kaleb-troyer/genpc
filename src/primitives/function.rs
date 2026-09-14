@@ -2,12 +2,12 @@
 // 2026-09-12
 // Kaleb Troyer
 
+use serde::{Deserialize, Serialize};
+
 use crate::units::{Duration, Range, Summon};
 use crate::typing::ActionType;
 use crate::combat::{Attack, Damage};
 use crate::abilities::Stat;
-
-use serde::{Deserialize, Serialize};
 
 
 // ========================================
